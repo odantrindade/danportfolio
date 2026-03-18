@@ -160,6 +160,80 @@
     .cta-actions { display: flex; gap: 16px; align-items: center; padding: 16px 0 8px; }
     .footer-bar { width: 100%; max-width: 1200px; padding: 0 10px 48px; }
     .footer-bar p { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--text); }
+
+    /* ── Responsive: tablet ── */
+    @media (max-width: 768px) {
+      /* Hero */
+      .hero { padding: 48px 0; }
+      .hero-title-row { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .hero-title { font-size: 56px; }
+      .hero-body { flex-direction: column; }
+      .hero-desc { flex: none; width: 100%; border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 24px; font-size: 16px; }
+
+      /* Dark band */
+      .dark-band { padding: 48px 0; }
+      .dark-band-inner { flex-direction: column; gap: 16px; padding: 0 20px; }
+      .dark-quote { flex: none; width: 100%; }
+      .dark-quote p { font-size: 22px; }
+
+      /* Process + phones */
+      .process-section { padding: 48px 0; overflow: hidden; }
+      .process-cards { flex-wrap: wrap; }
+      .process-card { flex: 0 0 calc(50% - 12px); }
+      /* Scale the phones illustration to fit */
+      .phones-wrap {
+        transform: scale(0.68);
+        transform-origin: top center;
+        margin-bottom: -218px; /* compensate flow height: 680*(1-0.68)≈218 */
+      }
+
+      /* Impact */
+      .impact-section { padding: 48px 0; }
+      .impact-cards { flex-wrap: wrap; }
+      .impact-card { flex: 0 0 calc(50% - 12px); }
+
+      /* Gallery: horizontally scrollable */
+      .gallery-section { overflow-x: auto; overflow-y: hidden; padding: 32px 0; justify-content: flex-start; padding-left: 20px; }
+
+      /* Analysis */
+      .analysis-section { padding: 0 0 48px; }
+      .analysis-layout { flex-direction: column; }
+      .analysis-cards { flex: none; width: 100%; }
+      .ds-shots { display: none; } /* decorative only — hidden on mobile */
+
+      /* Full-width band */
+      .fullwidth-band { height: 240px; }
+
+      /* Closing quote */
+      .quote-section { padding: 48px 0; }
+      .quote-block p { font-size: 22px; }
+
+      /* CTA footer */
+      .cta-footer { gap: 48px; padding-top: 40px; }
+      .cta-heading { font-size: 40px; }
+      .cta-actions { flex-direction: column; align-items: stretch; }
+      .cta-actions .btn { width: 100%; justify-content: center; height: 48px; }
+      .footer-bar { padding-bottom: 32px; }
+
+      /* Nav: shorten back-link text */
+      .btn-ghost span { font-size: 14px; }
+    }
+
+    /* ── Responsive: mobile ── */
+    @media (max-width: 480px) {
+      .hero-title { font-size: 40px; }
+      .dark-quote p { font-size: 18px; }
+      .process-card { flex: 0 0 100%; }
+      .phones-wrap {
+        transform: scale(0.48);
+        margin-bottom: -354px; /* 680*(1-0.48)≈354 */
+      }
+      .impact-card { flex: 0 0 100%; }
+      .quote-block p { font-size: 18px; }
+      .cta-heading { font-size: 28px; }
+      /* Show only arrow icon, hide text label in nav */
+      .btn-ghost span { display: none; }
+    }
   </style>
 </head>
 <body>

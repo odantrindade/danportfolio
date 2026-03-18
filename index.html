@@ -699,6 +699,139 @@
     .sticky-nav-wrap.scrolled {
       border-bottom: 1px solid var(--border);
     }
+
+    /* ── Hamburger ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dark);
+      transition: all .25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Responsive: tablet ── */
+    @media (max-width: 768px) {
+      /* Nav */
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        flex-direction: column;
+        padding: 8px 20px 24px;
+        border-bottom: 1px solid var(--border);
+        gap: 0;
+        align-items: flex-start;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links .btn-ghost { padding: 12px 0; height: auto; }
+      .nav-links .btn-solid { width: 100%; justify-content: center; height: 48px; margin-top: 8px; }
+      .nav-links .lang-toggle { margin-top: 8px; }
+
+      /* Layout */
+      .container { padding: 0 20px; }
+      .page-content { gap: 48px; }
+
+      /* Hero */
+      .hero { padding: 32px 20px 10px; gap: 24px; }
+      .hero-name { font-size: 80px; }
+
+      /* Section headings */
+      .section-heading { font-size: 40px; margin-bottom: 16px; }
+
+      /* Philosophy cards */
+      .cards-row { flex-direction: column; }
+
+      /* Project cards */
+      .project-card { flex-direction: column; padding: 16px 16px 0; min-height: 0; }
+      .project-thumb {
+        position: relative;          /* mantém filhos absolute ancorados na thumb */
+        width: calc(100% + 32px);    /* sangra 16px para cada lado, cobrindo o padding do card */
+        margin: 16px -16px 0;        /* espaço do conteúdo + sangria lateral + sem margem inferior */
+        height: 280px;
+        border: none;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding: 16px;
+        overflow: hidden;
+      }
+      .project-desc { max-width: 100%; }
+      .project-highlights { flex-wrap: wrap; gap: 16px; }
+
+      /* About */
+      .bio-layout { flex-direction: column; gap: 32px; }
+      .bio-photo-wrap { width: 100%; height: 480px; }
+
+      /* Skills */
+      .skills-grid { flex-wrap: wrap; }
+      .skill-col { flex: 0 0 calc(50% - 12px); }
+
+      /* Process */
+      .process-cards { flex-wrap: wrap; }
+      .process-card { flex: 0 0 calc(50% - 12px); }
+
+      /* Brands */
+      .brands-section { padding: 48px 0; }
+      .brands-label { padding: 0 20px; }
+
+      /* Contact */
+      .contact-heading { font-size: 40px; }
+      .contact-details { flex-direction: column; gap: 32px; }
+
+      /* Footer */
+      .footer-section { gap: 48px; padding-top: 40px; }
+
+      /* Bio layout */
+      .bio-layout { padding: 0; }
+    }
+
+    /* ── Responsive: mobile ── */
+    @media (max-width: 480px) {
+      .hero-name { font-size: 56px; }
+      .hero-bio { font-size: 16px; }
+      .section-heading { font-size: 32px; }
+      .contact-heading { font-size: 32px; }
+      .skill-col { flex: 0 0 100%; }
+      .process-card { flex: 0 0 100%; }
+      .project-highlights { flex-direction: row; flex-wrap: wrap; gap: 8px 16px; }
+      .page-content { gap: 40px; }
+
+      /* Typography adjustments */
+      .project-name { font-size: 22px; }
+      .bio-quote { font-size: 22px; }
+      .process-num { font-size: 32px; }
+
+      /* Project card */
+      .project-thumb { height: 240px; }
+      .btn-outlined { width: 100%; justify-content: center; }
+
+      /* Contact */
+      .contact-method-value { font-size: 14px; word-break: break-all; }
+
+      /* Footer */
+      .footer-section { gap: 40px; padding-top: 32px; }
+      .footer-bar { padding-bottom: 32px; }
+
+      /* Nav */
+      .nav { padding: 10px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -760,6 +893,9 @@
     <div class="nav-logo">
       <img src="https://www.figma.com/api/mcp/asset/26e25f82-cd7a-4283-ac19-316f09c717ca" alt="Dan Trindade" />
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
       <a href="#work" class="btn btn-ghost" data-pt="Meu trabalho" data-en="My work">Meu trabalho</a>
       <a href="#about" class="btn btn-ghost" data-pt="Sobre" data-en="About">Sobre</a>
@@ -1198,13 +1334,27 @@
 
 <script>
   const stickyNavWrap = document.querySelector('.sticky-nav-wrap');
-  
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 0) {
       stickyNavWrap.classList.add('scrolled');
     } else {
       stickyNavWrap.classList.remove('scrolled');
     }
+  });
+
+  // ── Hamburger menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
   });
 
   // ── Language switcher ──
