@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desty — Dan Trindade</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f3ee;
+      --dark: #131618;
+      --text: #4c575d;
+      --light: #eeeff0;
+      --border: #caced0;
+      --border-icon: #8c9498;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* ── Marquee ── */
+    .marquee-wrap { background: var(--dark); color: var(--light); height: 36px; overflow: hidden; display: flex; align-items: center; }
+    .marquee-inner { display: flex; width: max-content; animation: scrollText 30s linear infinite; }
+    .marquee-set { display: flex; gap: 24px; align-items: center; white-space: nowrap; flex-shrink: 0; font-size: 10px; font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: .04em; padding-right: 24px; }
+    .marquee-set .dot { opacity: .4; font-weight: 700; }
+    .marquee-set .dim { opacity: .48; }
+    @keyframes scrollText { from { transform: translateX(0); } to { transform: translateX(-25%); } }
+
+    /* ── Sticky nav ── */
+    .sticky-nav-wrap { position: sticky; top: 0; z-index: 100; width: 100%; display: flex; justify-content: center; background: var(--bg); transition: border-bottom .2s; }
+    .sticky-nav-wrap.scrolled { border-bottom: 1px solid var(--border); }
+    .nav { height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; width: 100%; max-width: 1200px; }
+    .nav-logo { flex-shrink: 0; line-height: 0; }
+    .nav-logo img { width: 89px; height: 28px; display: block; object-fit: contain; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 6px; justify-content: center; height: 40px; padding: 0 20px; font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 16px; cursor: pointer; transition: opacity .2s, background .2s, color .2s; text-decoration: none; border: none; background: none; }
+    .btn-ghost { color: var(--dark); opacity: .4; }
+    .btn-ghost:hover { opacity: 1; }
+    .lang-toggle { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--border); color: var(--text); padding: 0 10px; height: 40px; cursor: pointer; background: none; opacity: .5; transition: opacity .15s; display: inline-flex; align-items: center; }
+    .lang-toggle:hover { opacity: 1; }
+    .btn-solid-light { background: var(--light); color: var(--dark); height: 48px; }
+    .btn-solid-light:hover { opacity: .85; }
+    .btn-outlined-light { border: 1px solid var(--light); color: var(--light); height: 48px; }
+    .btn-outlined-light:hover { background: var(--light); color: var(--dark); }
+
+    /* ── Layout ── */
+    .container { width: 100%; max-width: 1200px; padding: 0 10px; }
+    .section-center { display: flex; justify-content: center; width: 100%; }
+    .section-label { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; opacity: .4; color: var(--dark); letter-spacing: .04em; }
+
+    /* ── Tags ── */
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .tag-chip { background: rgba(202,206,208,0.2); border: 1px solid var(--border); padding: 4px 8px; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 12px; text-transform: uppercase; color: var(--text); letter-spacing: .04em; }
+
+    /* ── Hero ── */
+    .hero { padding: 80px 0; }
+    .hero-title-row { display: flex; align-items: flex-end; justify-content: space-between; width: 100%; margin-bottom: 24px; }
+    .hero-title { display: flex; flex-direction: column; font-style: italic; font-size: 80px; line-height: 1; }
+    .hero-title .black { font-family: 'Exo 2', sans-serif; font-weight: 900; color: var(--dark); }
+    .hero-title .thin { font-family: 'Exo 2', sans-serif; font-weight: 100; color: var(--text); }
+    .hero-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 24px; }
+    .hero-body { display: flex; gap: 24px; align-items: flex-start; }
+    .hero-desc { flex: 0 0 720px; border-right: 1px solid var(--border); padding-right: 64px; font-size: 18px; line-height: 1.5; }
+    .hero-desc p + p { margin-top: 18px; }
+    .hero-meta { flex: 1; display: flex; flex-direction: column; }
+    .meta-row { border-bottom: 1px solid var(--border); padding: 16px; display: flex; align-items: center; justify-content: space-between; font-size: 14px; gap: 12px; }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-label { font-family: 'Exo 2', sans-serif; font-weight: 700; color: var(--text); white-space: nowrap; }
+    .meta-value { font-family: 'Outfit', sans-serif; font-weight: 300; color: var(--text); text-align: right; }
+
+    /* ── Dark band ── */
+    .dark-band { background: var(--dark); padding: 80px 0; display: flex; justify-content: center; }
+    .dark-band-inner { width: 100%; max-width: 1200px; padding: 0 10px; display: flex; align-items: flex-start; gap: 40px; }
+    .dark-label { flex: 1; font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; color: var(--light); opacity: .64; letter-spacing: .04em; padding-top: 8px; }
+    .dark-quote { flex: 0 0 720px; border-left: 2px solid var(--light); padding-left: 16px; }
+    .dark-quote p { font-family: 'Exo 2', sans-serif; font-style: italic; font-weight: 400; font-size: 32px; line-height: 1.5; color: var(--light); }
+    .dark-quote strong { font-weight: 700; }
+
+    /* ── Process cards ── */
+    .process-section { padding: 80px 0; display: flex; justify-content: center; flex-direction: column; align-items: center; }
+    .process-cards { display: flex; gap: 24px; margin-top: 24px; }
+    .process-card { flex: 1; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .process-num { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 40px; line-height: 1.5; opacity: .4; color: var(--text); }
+    .process-title { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: var(--text); }
+    .process-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--text); }
+
+    /* ── Phones ── */
+    .phones-wrap { position: relative; width: 586px; height: 680px; margin: 40px auto 40px; }
+    .phone-img-abs { position: absolute; border-radius: 32px; box-shadow: 0 3px 48px rgba(0,0,0,0.25); object-fit: cover; }
+    .phone-label { position: absolute; font-family: 'Exo 2', sans-serif; font-weight: 500; font-size: 32px; color: var(--dark); line-height: 1.2; }
+    .phone-arrow-wrap { position: absolute; display: flex; align-items: center; justify-content: center; }
+
+    /* ── Step 04 ── */
+    .step04-card { border: 1px solid var(--border); padding: 16px; width: 100%; }
+    .step04-phases { display: flex; flex-direction: column; margin-top: 10px; }
+    .phase-row { border-bottom: 1px solid var(--border); padding: 16px; display: flex; gap: 8px; align-items: flex-start; }
+    .phase-row:last-child { border-bottom: none; }
+    .phase-label { width: 44px; flex-shrink: 0; font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; opacity: .4; color: var(--dark); padding-top: 8px; }
+    .phase-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .phase-title { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: var(--text); }
+    .phase-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--text); }
+
+    /* ── Impact (dark) ── */
+    .impact-section { background: var(--dark); padding: 80px 0; display: flex; justify-content: center; }
+    .impact-inner { width: 100%; max-width: 1200px; padding: 0 10px; }
+    .impact-eyebrow { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; color: var(--light); opacity: .64; letter-spacing: .04em; margin-bottom: 24px; }
+    .impact-cards { display: flex; gap: 24px; }
+    .impact-card { flex: 1; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .impact-num { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 40px; line-height: 1.5; opacity: .4; color: var(--light); }
+    .impact-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--light); }
+
+    /* ── Gallery ── */
+    .gallery-section { padding: 80px 0; display: flex; justify-content: center; overflow: hidden; }
+    .gallery-wrap { position: relative; width: 1200px; height: 752px; flex-shrink: 0; }
+    .g-img { position: absolute; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+    .g-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-phone { position: absolute; border-radius: 32px; box-shadow: 0 3px 48px rgba(0,0,0,0.25); overflow: hidden; width: 310px; height: 672px; }
+    .g-phone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Analysis ── */
+    .analysis-section { padding: 0 0 80px; display: flex; justify-content: center; overflow: hidden; }
+    .analysis-inner { width: 100%; max-width: 1200px; padding: 0 10px; }
+    .analysis-eyebrow { margin-bottom: 24px; }
+    .analysis-layout { display: flex; gap: 24px; align-items: flex-end; }
+    .analysis-cards { flex: 0 0 656px; display: flex; flex-direction: column; gap: 24px; }
+    .a-card { border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .a-card-icon { border: 1px solid var(--border-icon); display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0; }
+    .a-card-icon img { width: 24px; height: 24px; object-fit: contain; display: block; }
+    .a-card-title { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.5; color: var(--text); }
+    .a-card-desc { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--text); }
+    .a-card-desc p + p { margin-top: 12px; }
+    .ds-shots { flex: 1; position: relative; height: 598px; min-width: 0; overflow: hidden; }
+    .ds-shot { position: absolute; border-radius: 4px; box-shadow: 0 8px 80px rgba(0,0,0,0.08); overflow: hidden; }
+    .ds-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Fullwidth image band ── */
+    .fullwidth-band { width: 100%; height: 560px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; position: relative; background: var(--light); }
+    .fullwidth-band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Closing quote ── */
+    .quote-section { padding: 80px 0; display: flex; justify-content: center; }
+    .quote-inner { width: 100%; max-width: 1200px; padding: 0 10px; }
+    .quote-block { border-left: 2px solid var(--text); padding-left: 16px; padding-top: 20px; padding-bottom: 20px; }
+    .quote-block p { font-family: 'Exo 2', sans-serif; font-style: italic; font-weight: 400; font-size: 32px; line-height: 1.5; color: var(--text); }
+    .quote-block strong { font-weight: 700; }
+
+    /* ── CTA Footer ── */
+    .cta-footer { background: var(--dark); padding: 60px 0 0; display: flex; flex-direction: column; align-items: center; gap: 80px; }
+    .cta-inner { width: 100%; max-width: 1200px; padding: 0 10px; display: flex; flex-direction: column; gap: 8px; }
+    .cta-eyebrow { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; color: var(--light); opacity: .64; letter-spacing: .04em; margin-bottom: 4px; }
+    .cta-heading { font-size: 64px; line-height: 1; color: var(--light); }
+    .cta-heading .li { font-family: 'Exo 2', sans-serif; font-weight: 300; font-style: italic; }
+    .cta-heading .bd { font-family: 'Exo 2', sans-serif; font-weight: 700; font-style: normal; }
+    .cta-actions { display: flex; gap: 16px; align-items: center; padding: 16px 0 8px; }
+    .footer-bar { width: 100%; max-width: 1200px; padding: 0 10px 48px; }
+    .footer-bar p { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.5; color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <div class="marquee-set">
+        <span>Visual Design</span><span class="dot">·</span><span class="dim">UX</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span><span class="dim">Design System</span><span class="dot">·</span><span>Product Design</span><span class="dot">·</span><span class="dim">B2B</span><span class="dot">·</span><span>SaaS</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>Leadership</span><span class="dot">·</span><span class="dim">Mobile</span>
+      </div>
+      <div class="marquee-set">
+        <span>Visual Design</span><span class="dot">·</span><span class="dim">UX</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span><span class="dim">Design System</span><span class="dot">·</span><span>Product Design</span><span class="dot">·</span><span class="dim">B2B</span><span class="dot">·</span><span>SaaS</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>Leadership</span><span class="dot">·</span><span class="dim">Mobile</span>
+      </div>
+      <div class="marquee-set">
+        <span>Visual Design</span><span class="dot">·</span><span class="dim">UX</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span><span class="dim">Design System</span><span class="dot">·</span><span>Product Design</span><span class="dot">·</span><span class="dim">B2B</span><span class="dot">·</span><span>SaaS</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>Leadership</span><span class="dot">·</span><span class="dim">Mobile</span>
+      </div>
+      <div class="marquee-set">
+        <span>Visual Design</span><span class="dot">·</span><span class="dim">UX</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span><span class="dim">Design System</span><span class="dot">·</span><span>Product Design</span><span class="dot">·</span><span class="dim">B2B</span><span class="dot">·</span><span>SaaS</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>Leadership</span><span class="dot">·</span><span class="dim">Mobile</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Nav -->
+  <div class="sticky-nav-wrap" id="navWrap">
+    <nav class="nav">
+      <a class="nav-logo" href="index.html">
+        <img src="https://www.figma.com/api/mcp/asset/fa602872-a9c9-4146-bbd9-d17cbd753f28" alt="Dan Trindade" />
+      </a>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="index.html" class="btn btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-pt="Todos os projetos" data-en="All projects">Todos os projetos</span>
+        </a>
+        <button class="lang-toggle" id="langToggle">EN</button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <div class="section-center">
+    <div class="container hero">
+      <div class="tag-row">
+        <span class="tag-chip">design system</span>
+        <span class="tag-chip">saas</span>
+        <span class="tag-chip">cx</span>
+        <span class="tag-chip">Leadership</span>
+        <span class="tag-chip">mobile</span>
+      </div>
+
+      <div class="hero-title-row">
+        <div class="hero-title">
+          <span class="black">Desty</span>
+          <span class="thin" data-pt="Banco Digital" data-en="Digital Bank">Banco Digital</span>
+        </div>
+        <div>
+          <img src="https://www.figma.com/api/mcp/asset/f4592237-b5a7-4e03-a028-2555a31730cd" alt="Desty" style="display:block;height:80px;width:240px;object-fit:contain" />
+        </div>
+      </div>
+
+      <hr class="hero-divider" />
+
+      <div class="hero-body">
+        <div class="hero-desc" data-pt="<p>Minha experiência no Banco Desty foi ao mesmo tempo enriquecedora e desafiadora, permitindo que eu atuasse em diferentes áreas do design e desenvolvesse uma compreensão ampla do produto e da organização.</p><p>No departamento de CX, atuei como Visual Designer com foco em comunicação e branding — fortalecendo a conexão entre os usuários e a marca Desty, além de gerenciar a agência de comunicação externa.</p><p>O ponto alto da minha passagem por lá foi liderar o squad de <strong>Design System</strong>, onde implementei uma estrutura enxuta, escalável e bem documentada — que se tornou fundamental à medida que a empresa expandia para o modelo <strong>Bank as a Service (BaaS)</strong>.</p>" data-en="<p>My experience at Banco Desty was both enriching and challenging, allowing me to work across different design areas and develop a broad understanding of the product and the organisation.</p><p>In the CX department, I worked as a Visual Designer focused on communication and branding — strengthening the connection between users and the Desty brand, while also managing the external communications agency.</p><p>The highlight of my time there was leading the <strong>Design System</strong> squad, where I implemented a lean, scalable, and well-documented structure — which became essential as the company expanded into the <strong>Bank as a Service (BaaS)</strong> model.</p>">
+          <p>Minha experiência no Banco Desty foi ao mesmo tempo enriquecedora e desafiadora, permitindo que eu atuasse em diferentes áreas do design e desenvolvesse uma compreensão ampla do produto e da organização.</p>
+          <p>No departamento de CX, atuei como Visual Designer com foco em comunicação e branding — fortalecendo a conexão entre os usuários e a marca Desty, além de gerenciar a agência de comunicação externa.</p>
+          <p>O ponto alto da minha passagem por lá foi liderar o squad de <strong>Design System</strong>, onde implementei uma estrutura enxuta, escalável e bem documentada — que se tornou fundamental à medida que a empresa expandia para o modelo <strong>Bank as a Service (BaaS)</strong>.</p>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-row">
+            <span class="meta-label" data-pt="Empresa" data-en="Company">Empresa</span>
+            <span class="meta-value">Desty</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label" data-pt="Cargo" data-en="Role">Cargo</span>
+            <span class="meta-value">Senior Product Designer</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label" data-pt="Período" data-en="Period">Período</span>
+            <span class="meta-value">2022–2023</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label" data-pt="Foco" data-en="Focus">Foco</span>
+            <span class="meta-value">Design System · CX · DesignOps</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label" data-pt="Localização" data-en="Location">Localização</span>
+            <span class="meta-value" data-pt="Remoto (sede em Sergipe, Brasil)" data-en="Remote (HQ in Sergipe, Brazil)">Remoto (sede em Sergipe, Brasil)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark Context Band -->
+  <div class="dark-band">
+    <div class="dark-band-inner">
+      <div class="dark-label" data-pt="— Contexto" data-en="— Context">— Contexto</div>
+      <div class="dark-quote">
+        <p data-pt="Um Design System construído <strong>para servir dois produtos ao mesmo tempo</strong> — a Desty e seus parceiros BaaS — exigindo flexibilidade, escalabilidade e documentação impecável." data-en="A Design System built <strong>to serve two products at once</strong> — Desty and its BaaS partners — demanding flexibility, scalability, and impeccable documentation.">Um Design System construído <strong>para servir dois produtos ao mesmo tempo</strong> — a Desty e seus parceiros BaaS — exigindo flexibilidade, escalabilidade e documentação impecável.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Process + Phones + Step 04 -->
+  <div class="process-section">
+    <div class="container">
+
+      <!-- 3 process cards -->
+      <div class="section-label" data-pt="— Processo" data-en="— Process">— Processo</div>
+      <div class="process-cards">
+        <div class="process-card">
+          <div class="process-num">01</div>
+          <div class="process-title">Discover</div>
+          <div class="process-desc" data-pt="Explorei e compreendi as necessidades dos usuários e do negócio, bem como os desafios enfrentados com o DS v1.0. Ao identificar essas oportunidades, foi possível definir objetivos claros para a criação de uma nova versão." data-en="I explored and understood the needs of users and the business, as well as the challenges faced with DS v1.0. By identifying these opportunities, it was possible to define clear objectives for creating a new version.">Explorei e compreendi as necessidades dos usuários e do negócio, bem como os desafios enfrentados com o DS v1.0. Ao identificar essas oportunidades, foi possível definir objetivos claros para a criação de uma nova versão.</div>
+        </div>
+        <div class="process-card">
+          <div class="process-num">02</div>
+          <div class="process-title">Research</div>
+          <div class="process-desc" data-pt="Realizei estudos, analisei as melhores práticas do mercado, explorei novas tecnologias e coletei feedback de todos os times envolvidos. Isso proporcionou uma base sólida para a evolução do sistema." data-en="I conducted research, analysed market best practices, explored new technologies, and gathered feedback from all teams involved. This provided a solid foundation for the system's evolution.">Realizei estudos, analisei as melhores práticas do mercado, explorei novas tecnologias e coletei feedback de todos os times envolvidos. Isso proporcionou uma base sólida para a evolução do sistema.</div>
+        </div>
+        <div class="process-card">
+          <div class="process-num">03</div>
+          <div class="process-title">Planning</div>
+          <div class="process-desc" data-pt="Desenvolvi uma estratégia clara, defini metas mensuráveis e criei um plano de ação detalhado. O roadmap considerou a integração com BaaS e a flexibilidade de temas, garantindo uma documentação abrangente e acessível." data-en="I developed a clear strategy, defined measurable goals, and created a detailed action plan. The roadmap accounted for BaaS integration and theme flexibility, ensuring comprehensive and accessible documentation.">Desenvolvi uma estratégia clara, defini metas mensuráveis e criei um plano de ação detalhado. O roadmap considerou a integração com BaaS e a flexibilidade de temas, garantindo uma documentação abrangente e acessível.</div>
+        </div>
+      </div>
+
+      <!-- Phones: Desty → BaaS -->
+      <div class="phones-wrap">
+        <!-- Labels -->
+        <span class="phone-label" style="left:0;bottom:112px">Desty</span>
+        <span class="phone-label" style="right:0;top:95px;text-align:right">BaaS</span>
+        <!-- Bottom arrow (between phones, rotated) -->
+        <div class="phone-arrow-wrap" style="position:absolute;left:165px;top:520px;width:160px;height:160px;transform:rotate(-20.2deg)">
+          <img src="https://www.figma.com/api/mcp/asset/ff2a61fa-15a9-49d4-b1f3-6190e0a33ab6" alt="" style="width:114px;height:120px;object-fit:contain;display:block" />
+        </div>
+        <!-- Top arrow (rotated) -->
+        <div class="phone-arrow-wrap" style="position:absolute;left:242px;top:0;width:160px;height:160px;transform:rotate(151.34deg)">
+          <img src="https://www.figma.com/api/mcp/asset/c9fb56d8-ea8c-4ab6-8baa-460a7b19937f" alt="" style="width:114px;height:120px;object-fit:contain;display:block" />
+        </div>
+        <!-- Phone 1: Desty -->
+        <img class="phone-img-abs" src="https://www.figma.com/api/mcp/asset/591171fc-9945-4af4-9877-e6996b34a789" alt="Desty app" style="left:0;top:14px;width:233px;height:504px" />
+        <!-- Phone 2: BaaS -->
+        <img class="phone-img-abs" src="https://www.figma.com/api/mcp/asset/39f934d5-8848-4222-8b51-e83c018296fb" alt="BaaS app" style="left:353px;top:149px;width:233px;height:504px" />
+      </div>
+
+      <!-- Step 04 -->
+      <div class="step04-card">
+        <div class="process-num">04</div>
+        <div class="process-title" data-pt="Criação" data-en="Creation">Criação</div>
+        <div class="step04-phases">
+          <div class="phase-row">
+            <span class="phase-label" data-pt="Fase 1" data-en="Phase 1">Fase 1</span>
+            <div class="phase-content">
+              <div class="phase-title">Foundations</div>
+              <div class="phase-desc" data-pt="Documentação de Princípios de Design, Style Tokens, Naming Guidelines, Assets (ícones e ilustrações) e mapeamento de todos os componentes a serem criados. A base sobre a qual todo o resto é construído." data-en="Documentation of Design Principles, Style Tokens, Naming Guidelines, Assets (icons and illustrations), and mapping of all components to be built. The foundation on which everything else is built.">Documentação de Princípios de Design, Style Tokens, Naming Guidelines, Assets (ícones e ilustrações) e mapeamento de todos os componentes a serem criados. A base sobre a qual todo o resto é construído.</div>
+            </div>
+          </div>
+          <div class="phase-row">
+            <span class="phase-label" data-pt="Fase 2" data-en="Phase 2">Fase 2</span>
+            <div class="phase-content">
+              <div class="phase-title" data-pt="Componentes Básicos" data-en="Basic Components">Componentes Básicos</div>
+              <div class="phase-desc" data-pt="Desenvolvimento de componentes atômicos — botões, switches, checkboxes, inputs. Construídos com o theming BaaS em mente desde o início, para que cada decisão de token se propagasse adiante." data-en="Development of atomic components — buttons, switches, checkboxes, inputs. Built with BaaS theming in mind from the start, so that every token decision would propagate forward.">Desenvolvimento de componentes atômicos — botões, switches, checkboxes, inputs. Construídos com o theming BaaS em mente desde o início, para que cada decisão de token se propagasse adiante.</div>
+            </div>
+          </div>
+          <div class="phase-row">
+            <span class="phase-label" data-pt="Fase 3" data-en="Phase 3">Fase 3</span>
+            <div class="phase-content">
+              <div class="phase-title" data-pt="Componentes Compostos + Code Kickoff" data-en="Composite Components + Code Kickoff">Componentes Compostos + Code Kickoff</div>
+              <div class="phase-desc" data-pt="Criação de list tiles, cards e composições complexas junto com o início do desenvolvimento em código — rodando em paralelo com as fases de design para reduzir o lag de handoff." data-en="Creation of list tiles, cards, and complex compositions alongside the start of code development — running in parallel with design phases to reduce handoff lag.">Criação de list tiles, cards e composições complexas junto com o início do desenvolvimento em código — rodando em paralelo com as fases de design para reduzir o lag de handoff.</div>
+            </div>
+          </div>
+          <div class="phase-row" style="border-bottom:none">
+            <span class="phase-label" data-pt="Fase 4" data-en="Phase 4">Fase 4</span>
+            <div class="phase-content">
+              <div class="phase-title" data-pt="Componentes Específicos para Banking" data-en="Banking-Specific Components">Componentes Específicos para Banking</div>
+              <div class="phase-desc" data-pt="Design de componentes complexos voltados às necessidades do negócio bancário — listas de transações, UI de cartão de crédito, exibição de saldos e fluxos Pix. Usabilidade e escalabilidade foram prioridades ao longo de todo o processo, junto com a implementação BaaS." data-en="Design of complex components tailored to banking business needs — transaction lists, credit card UI, balance displays, and Pix flows. Usability and scalability were priorities throughout, alongside the BaaS implementation.">Design de componentes complexos voltados às necessidades do negócio bancário — listas de transações, UI de cartão de crédito, exibição de saldos e fluxos Pix. Usabilidade e escalabilidade foram prioridades ao longo de todo o processo, junto com a implementação BaaS.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Impact (dark) -->
+  <div class="impact-section">
+    <div class="impact-inner">
+      <div class="impact-eyebrow" data-pt="— impacto" data-en="— impact">— impacto</div>
+      <div class="impact-cards">
+        <div class="impact-card">
+          <div class="impact-num">+5</div>
+          <div class="impact-desc" data-pt="Designers liderados na squad de Design System" data-en="Designers led in the Design System squad">Designers liderados na squad de Design System</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">+300</div>
+          <div class="impact-desc" data-pt="Componentes e ícones documentados" data-en="Components and icons documented">Componentes e ícones documentados</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-num">+8</div>
+          <div class="impact-desc" data-pt="Times impactados pelo novo Design System" data-en="Teams impacted by the new Design System">Times impactados pelo novo Design System</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery-section">
+    <div class="gallery-wrap">
+      <!-- image 4: x=103, y=80, 264×327 -->
+      <div class="g-img" style="left:103px;top:80px;width:264px;height:327px">
+        <img src="https://www.figma.com/api/mcp/asset/5fbb1fac-e421-439c-9b3f-705a535e8077" alt="" />
+      </div>
+      <!-- image 10: x=475, y=80, 250×399 -->
+      <div class="g-img" style="left:475px;top:80px;width:250px;height:399px">
+        <img src="https://www.figma.com/api/mcp/asset/cd12a0a6-0047-4f39-ae46-7fd38b70f8f8" alt="" />
+      </div>
+      <!-- phone (Desty): x=813, y=80, 233×504 -->
+      <div class="g-phone" style="left:813px;top:80px;width:310px;height:672px">
+        <img src="https://www.figma.com/api/mcp/asset/591171fc-9945-4af4-9877-e6996b34a789" alt="" />
+      </div>
+      <!-- image 6: x=76, y=511, 351×241 -->
+      <div class="g-img" style="left:76px;top:511px;width:351px;height:241px">
+        <img src="https://www.figma.com/api/mcp/asset/c752505e-344f-4c61-9717-4b059d392ac6" alt="" />
+      </div>
+      <!-- image 9: x=495, y=512, 218×240 -->
+      <div class="g-img" style="left:495px;top:512px;width:218px;height:240px;border-radius:8px">
+        <img src="https://www.figma.com/api/mcp/asset/2a0dced9-16a5-4406-a910-41253a9b9871" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis -->
+  <div class="analysis-section">
+    <div class="analysis-inner">
+      <div class="section-label analysis-eyebrow" data-pt="— Análise e Desenvolvimento" data-en="— Analysis and Development">— Análise e Desenvolvimento</div>
+      <div class="analysis-layout">
+        <div class="analysis-cards">
+          <div class="a-card">
+            <div class="a-card-icon">
+              <img src="https://www.figma.com/api/mcp/asset/db718878-f301-45bd-a40a-2b3f9c3c46c9" alt="" />
+            </div>
+            <div class="a-card-title" data-pt="Análise" data-en="Analysis">Análise</div>
+            <div class="a-card-desc" data-pt="<p>Após a criação dos novos componentes, foi realizada uma análise detalhada. Isso incluiu <strong>testar os componentes em diferentes cenários</strong>, avaliar a eficácia e coletar feedback dos times.</p><p>A análise ajudou a identificar melhorias e garantir que os componentes atendessem tanto às necessidades do BaaS quanto aos nossos objetivos de UX — especialmente em <strong>acessibilidade</strong>. Utilizamos amplamente o Figma Analytics e KPIs internos para embasar esse processo.</p>" data-en="<p>After the new components were created, a detailed analysis was carried out. This included <strong>testing components across different scenarios</strong>, evaluating effectiveness, and gathering team feedback.</p><p>The analysis helped identify improvements and ensure the components met both BaaS needs and our UX goals — especially around <strong>accessibility</strong>. We extensively used Figma Analytics and internal KPIs to support this process.</p>">
+              <p>Após a criação dos novos componentes, foi realizada uma análise detalhada. Isso incluiu <strong>testar os componentes em diferentes cenários</strong>, avaliar a eficácia e coletar feedback dos times.</p>
+              <p>A análise ajudou a identificar melhorias e garantir que os componentes atendessem tanto às necessidades do BaaS quanto aos nossos objetivos de UX — especialmente em <strong>acessibilidade</strong>. Utilizamos amplamente o Figma Analytics e KPIs internos para embasar esse processo.</p>
+            </div>
+          </div>
+          <div class="a-card">
+            <div class="a-card-icon">
+              <img src="https://www.figma.com/api/mcp/asset/4a1fce4e-7030-4096-abfc-102fde58f905" alt="" />
+            </div>
+            <div class="a-card-title" data-pt="Colaboração em aberto" data-en="Open collaboration">Colaboração em aberto</div>
+            <div class="a-card-desc" data-pt="<p>Os componentes atualizados foram desenvolvidos e implementados no Design System 2.0. Com uma <strong>biblioteca de componentes bem estruturada</strong>, os esforços de UI e engenharia foram significativamente otimizados.</p><p>Isso liberou recursos para focar na melhoria da experiência do usuário — e deu à empresa uma <strong>base escalável</strong> para a expansão contínua do BaaS.</p>" data-en="<p>The updated components were developed and implemented in Design System 2.0. With a <strong>well-structured component library</strong>, UI and engineering efforts were significantly optimised.</p><p>This freed up resources to focus on improving the user experience — and gave the company a <strong>scalable foundation</strong> for continued BaaS expansion.</p>">
+              <p>Os componentes atualizados foram desenvolvidos e implementados no Design System 2.0. Com uma <strong>biblioteca de componentes bem estruturada</strong>, os esforços de UI e engenharia foram significativamente otimizados.</p>
+              <p>Isso liberou recursos para focar na melhoria da experiência do usuário — e deu à empresa uma <strong>base escalável</strong> para a expansão contínua do BaaS.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DS screenshots (stacked, overflow right) -->
+        <div class="ds-shots">
+          <!-- Componente Input Pesquisa: 249×457, top=225 -->
+          <div class="ds-shot" style="left:0;top:320px;width:249px;height:457px">
+            <img src="https://www.figma.com/api/mcp/asset/49191978-1265-417f-ad71-f43c789f5289" alt="" />
+          </div>
+          <!-- Tokens Tipográficos: 307×560, top=144 -->
+          <div class="ds-shot" style="left:111px;top:240px;width:307px;height:560px">
+            <img src="https://www.figma.com/api/mcp/asset/b3f82b1f-104e-48cd-990d-ab51224f65b8" alt="" />
+          </div>
+          <!-- Tema claro: 360×419, top=65 -->
+          <div class="ds-shot" style="left:254px;top:150px;width:360px;">
+            <img src="https://www.figma.com/api/mcp/asset/ccc571a4-d775-4208-ad55-2146911363f3" alt="" />
+          </div>
+          <!-- Ilustrações 1: 282×409, top=88 -->
+          <div class="ds-shot" style="left:412px;top:190px;width:282px;height:409px">
+            <img src="https://www.figma.com/api/mcp/asset/9e090b53-390e-4bfb-b20f-53eacfd4c63a" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-width image band -->
+  <div class="fullwidth-band">
+    <img src="https://www.figma.com/api/mcp/asset/a74a027b-909f-4eb0-a813-e009b1ff80e2" alt="Desty app screens" />
+  </div>
+
+  <!-- Closing quote -->
+  <div class="quote-section">
+    <div class="quote-inner">
+      <div class="quote-block">
+        <p data-pt="A atualização da v1.0 para a v2.0 foi essencial para centralizar informações antes dispersas e resolver inconsistências. Foi fundamental para garantir consistência visual e funcional, <strong>viabilizar uma melhor colaboração</strong> e suportar a expansão do BaaS de forma escalável." data-en="The update from v1.0 to v2.0 was essential to centralise previously scattered information and resolve inconsistencies. It was key to ensuring visual and functional consistency, <strong>enabling better collaboration</strong>, and supporting BaaS expansion in a scalable way.">A atualização da v1.0 para a v2.0 foi essencial para centralizar informações antes dispersas e resolver inconsistências. Foi fundamental para garantir consistência visual e funcional, <strong>viabilizar uma melhor colaboração</strong> e suportar a expansão do BaaS de forma escalável.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Footer -->
+  <div class="cta-footer">
+    <div class="cta-inner">
+      <p class="cta-eyebrow" data-pt="— estudo de caso completo" data-en="— full case study">— estudo de caso completo</p>
+      <div class="cta-heading">
+        <p><span class="li" data-pt="Gostou do que viu?" data-en="Like what you saw?">Gostou do que viu?</span></p>
+        <p data-pt="<span class='li'>Vamos</span><span class='bd'>construir</span>" data-en="<span class='li'>Let's</span><span class='bd'>build</span>"><span class="li">Vamos</span><span class="bd">construir</span></p>
+        <p data-pt="<span class='li'>algo </span><span class='bd'>juntos</span>" data-en="<span class='li'>something </span><span class='bd'>together</span>"><span class="li">algo </span><span class="bd">juntos</span></p>
+      </div>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-solid-light">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-pt="Entrar em contato" data-en="Get in touch">Entrar em contato</span>
+        </a>
+        <a href="index.html" class="btn btn-outlined-light">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-pt="Ver mais projetos" data-en="See more projects">Ver mais projetos</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <p data-pt="© 2026 Dan Trindade. Todos os direitos reservados." data-en="© 2026 Dan Trindade. All rights reserved.">© 2026 Dan Trindade. Todos os direitos reservados.</p>
+    </div>
+  </div>
+
+  <script>
+    const navWrap = document.getElementById('navWrap');
+    window.addEventListener('scroll', () => {
+      navWrap.classList.toggle('scrolled', window.scrollY > 0);
+    });
+
+  // ── Language switcher ──
+  (function () {
+    const LANG_KEY = 'portfolio-lang';
+    const btn = document.getElementById('langToggle');
+    function applyLang(lang) {
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        el.innerHTML = lang === 'en' ? (el.dataset.en || el.dataset.pt) : el.dataset.pt;
+      });
+      if (btn) btn.textContent = lang === 'en' ? 'PT' : 'EN';
+      localStorage.setItem(LANG_KEY, lang);
+    }
+    if (btn) btn.addEventListener('click', () => {
+      applyLang((localStorage.getItem(LANG_KEY) || 'pt') === 'pt' ? 'en' : 'pt');
+    });
+    applyLang(localStorage.getItem(LANG_KEY) || 'pt');
+  })();
+  </script>
+</body>
+</html>

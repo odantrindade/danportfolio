@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dan Trindade — Product Designer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f3ee;
+      --dark: #131618;
+      --text: #4c575d;
+      --light: #eeeff0;
+      --border: #caced0;
+      --border-icon: #8c9498;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── Marquee ── */
+    .marquee-wrap {
+      background: var(--dark);
+      color: var(--light);
+      height: 36px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .marquee-inner {
+      display: flex;
+      width: max-content;
+      animation: scrollText 30s linear infinite;
+    }
+    @keyframes scrollText {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-25%); }
+    }
+    .marquee-set {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 10px;
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding-right: 24px; /* garante gap idêntico na costura do loop */
+    }
+    .marquee-set span { flex-shrink: 0; }
+    .marquee-set .dot { opacity: .4; font-weight: 700; }
+    .marquee-set .dim { opacity: .48; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Layout ── */
+    .page-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 10px;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      background: var(--bg);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+    }
+    .nav-logo { flex-shrink: 0; line-height: 0; }
+    .nav-logo img { width: 89px; height: 28px; display: block; object-fit: contain; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 20px;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      cursor: pointer;
+      transition: opacity .2s;
+      text-decoration: none;
+      border: none;
+      background: none;
+    }
+    .btn-ghost { color: var(--dark); opacity: .4; }
+    .btn-ghost:hover { opacity: 1; }
+    .lang-toggle { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--border); color: var(--dark); padding: 0 10px; height: 40px; cursor: pointer; background: none; opacity: .5; transition: opacity .15s; display: inline-flex; align-items: center; }
+    .lang-toggle:hover { opacity: 1; }
+    .btn-solid { background: var(--dark); color: var(--light); }
+    .btn-solid:hover { opacity: .85; }
+    .btn-outlined { border: 1px solid var(--dark); color: var(--dark); }
+    .btn-outlined:hover { background: var(--dark); color: var(--light); }
+    .btn-lg { height: 40px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 40px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .hero-label {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: .4;
+      color: var(--dark);
+      letter-spacing: .04em;
+    }
+    .hero-name {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      font-size: 180px;
+      font-style: italic;
+      gap: 0;
+    }
+    .hero-name .first {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 50%;
+
+    }
+    .hero-name .last {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 100;
+      color: var(--text);
+    }
+    .hero-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+    .hero-bio {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.5;
+      max-width: 720px;
+    }
+
+    /* ── Philosophy cards ── */
+    .cards-row {
+      display: flex;
+      gap: 24px;
+    }
+    .card {
+      flex: 1;
+      border: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-icon-wrap {
+      border: 1px solid var(--border-icon);
+      padding: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+    }
+    .card-icon-wrap .icon-img-wrap { position: relative; width: 24px; height: 24px; flex-shrink: 0; }
+    .card-icon-wrap .icon-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
+    .card-title {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .card-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── Section title ── */
+    .section-label {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: .4;
+      color: var(--dark);
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+    .section-heading {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 64px;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .section-heading em {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* ── Work / Project cards ── */
+    .work-section { display: flex; flex-direction: column; gap: 24px; }
+    .project-card {
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .project-header { display: flex; flex-direction: column; gap: 4px; }
+    .project-name {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .project-role {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      opacity: .48;
+      line-height: 1.5;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: rgba(202,206,208,.2);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--text);
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+    .project-desc {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.5;
+      max-width: 620px;
+    }
+    .project-highlights {
+      display: flex;
+      gap: 32px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .project-highlights strong { font-weight: 700; }
+    .project-thumb {
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      width: 420px;
+      height: 302px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 24px;
+      overflow: hidden;
+    }
+    .project-thumb-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--light);
+    }
+    .project-thumb-bg img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .project-thumb-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(247,243,238,.08) 3%, #f7f3ee 88%);
+    }
+    .project-thumb-logo {
+      position: relative;
+      z-index: 1;
+    }
+    .project-thumb-logo img { display: block; max-height: 64px; max-width: 210px; }
+
+    /* ── About ── */
+    .about-section { display: flex; flex-direction: column; gap: 24px; }
+    .bio-layout {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      padding: 24px 0;
+    }
+    .bio-left {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+    .bio-photo-wrap {
+      border: 1px solid var(--border);
+      width: 420px;
+      height: 539px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bio-photo-wrap img {
+      width: 100%;
+      height: 108%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+    }
+    .bio-name-tag {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      background: rgba(19,22,24,.2);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--border);
+      text-transform: uppercase;
+      line-height: 1.5;
+      z-index: 2;
+    }
+    .bio-details-box {
+      border: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .bio-detail-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 16px;
+    }
+    .bio-detail-label {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      width: 96px;
+      flex-shrink: 0;
+      line-height: 1.5;
+    }
+    .bio-detail-value {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .bio-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .bio-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .bio-text p + p { margin-top: 1em; }
+    .bio-quote {
+      border-left: 2px solid var(--text);
+      padding-left: 16px;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 32px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .skills-grid { display: flex; gap: 24px; }
+    .skill-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px 0;
+    }
+    .skill-col-title {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .skill-col ul {
+      list-style: disc;
+      padding-left: 21px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── Process ── */
+    .process-section { display: flex; flex-direction: column; gap: 24px; }
+    .process-cards { display: flex; gap: 24px; }
+    .process-card {
+      flex: 1;
+      border: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .process-num {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 40px;
+      color: var(--text);
+      opacity: .4;
+      line-height: 1.5;
+    }
+    .process-title {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .process-body {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── Brands ── */
+    .brands-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    .brands-label {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      text-align: center;
+    }
+    .brands-marquee {
+      width: 100%;
+      overflow: hidden;
+    }
+    .brands-inner {
+      display: flex;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    /* container de cada set: fundo branco + opacidade = efeito cinza idêntico ao Figma */
+    .brands-set {
+      display: flex;
+      align-items: center;
+      gap: 96px;
+      flex-shrink: 0;
+      padding: 16px 96px 16px 0;
+      background: white;
+      opacity: .48;
+    }
+    /* cada logo em seu próprio wrapper com dimensões exatas */
+    .logo-wrap {
+      position: relative;
+      height: 40px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .logo-wrap img {
+      position: absolute;
+      inset: 0;
+      max-width: none;
+      mix-blend-mode: multiply;
+      filter: grayscale(1);
+      pointer-events: none;
+    }
+    /* logos com fill simples */
+    .logo-fill img { width: 100%; height: 100%; object-fit: contain; top: 0; left: 0; }
+    /* logos com cover */
+    .logo-cover img { width: 100%; height: 100%; object-fit: cover; top: 0; left: 0; }
+
+    /* ── Footer / Contact ── */
+    .footer-section {
+      background: var(--dark);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 80px;
+      padding-top: 60px;
+    }
+    .contact-block {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 0 10px;
+    }
+    .contact-heading {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 64px;
+      color: var(--light);
+      line-height: 1;
+    }
+    .contact-heading em {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+    }
+    .contact-label {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: .64;
+      color: var(--light);
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+    .contact-details {
+      display: flex;
+      gap: 64px;
+      padding: 24px 0;
+    }
+    .contact-avail {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(104,193,106,.08);
+      border: 1px solid #68c16a;
+      padding: 4px 8px;
+      width: fit-content;
+    }
+    .available-dot {
+      width: 4px;
+      height: 4px;
+      background: #68c16a;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .available-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      color: #68c16a;
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+    .contact-avail-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--light);
+      line-height: 1.5;
+    }
+    .contact-methods {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .contact-method {
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .contact-method:hover { background: rgba(255,255,255,.05); }
+    .contact-method-icon {
+      border: 1px solid var(--border-icon);
+      padding: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+    }
+    .contact-method-icon .icon-img-wrap { position: relative; width: 24px; height: 24px; flex-shrink: 0; }
+    .contact-method-icon .icon-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; }
+    .contact-method-info { display: flex; flex-direction: column; gap: 0; }
+    .contact-method-label {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--light);
+      opacity: .64;
+      line-height: 1.5;
+    }
+    .contact-method-value {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--light);
+      line-height: 1.5;
+    }
+    .footer-bar {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 10px 48px;
+    }
+    .footer-copy {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    /* ── Sticky nav wrapper ── */
+    .sticky-nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background: var(--bg);
+      transition: border-bottom .2s;
+    }
+    .sticky-nav-wrap.scrolled {
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <!-- 4 sets idênticos: anima -25% = move exatamente 1 set, sempre com conteúdo preenchendo a tela -->
+    <div class="marquee-set">
+      <span>Design Systems</span><span class="dot">·</span>
+      <span class="dim">DesignOps</span><span class="dot">·</span>
+      <span>UI / UX</span><span class="dot">·</span>
+      <span class="dim">Product Designer</span><span class="dot">·</span>
+      <span>AI UX</span><span class="dot">·</span>
+      <span class="dim">Product Discovery</span><span class="dot">·</span>
+      <span>Design Tokens</span><span class="dot">·</span>
+      <span class="dim">SaaS</span><span class="dot">·</span>
+      <span>Fintech</span><span class="dot">·</span>
+    </div>
+    <div class="marquee-set" aria-hidden="true">
+      <span>Design Systems</span><span class="dot">·</span>
+      <span class="dim">DesignOps</span><span class="dot">·</span>
+      <span>UI / UX</span><span class="dot">·</span>
+      <span class="dim">Product Designer</span><span class="dot">·</span>
+      <span>AI UX</span><span class="dot">·</span>
+      <span class="dim">Product Discovery</span><span class="dot">·</span>
+      <span>Design Tokens</span><span class="dot">·</span>
+      <span class="dim">SaaS</span><span class="dot">·</span>
+      <span>Fintech</span><span class="dot">·</span>
+    </div>
+    <div class="marquee-set" aria-hidden="true">
+      <span>Design Systems</span><span class="dot">·</span>
+      <span class="dim">DesignOps</span><span class="dot">·</span>
+      <span>UI / UX</span><span class="dot">·</span>
+      <span class="dim">Product Designer</span><span class="dot">·</span>
+      <span>AI UX</span><span class="dot">·</span>
+      <span class="dim">Product Discovery</span><span class="dot">·</span>
+      <span>Design Tokens</span><span class="dot">·</span>
+      <span class="dim">SaaS</span><span class="dot">·</span>
+      <span>Fintech</span><span class="dot">·</span>
+    </div>
+    <div class="marquee-set" aria-hidden="true">
+      <span>Design Systems</span><span class="dot">·</span>
+      <span class="dim">DesignOps</span><span class="dot">·</span>
+      <span>UI / UX</span><span class="dot">·</span>
+      <span class="dim">Product Designer</span><span class="dot">·</span>
+      <span>AI UX</span><span class="dot">·</span>
+      <span class="dim">Product Discovery</span><span class="dot">·</span>
+      <span>Design Tokens</span><span class="dot">·</span>
+      <span class="dim">SaaS</span><span class="dot">·</span>
+      <span>Fintech</span><span class="dot">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Nav -->
+<div class="sticky-nav-wrap">
+  <nav class="nav container">
+    <div class="nav-logo">
+      <img src="https://www.figma.com/api/mcp/asset/26e25f82-cd7a-4283-ac19-316f09c717ca" alt="Dan Trindade" />
+    </div>
+    <div class="nav-links">
+      <a href="#work" class="btn btn-ghost" data-pt="Meu trabalho" data-en="My work">Meu trabalho</a>
+      <a href="#about" class="btn btn-ghost" data-pt="Sobre" data-en="About">Sobre</a>
+      <a href="#contact" class="btn btn-solid" data-pt="Vamos conversar" data-en="Let's talk">Vamos conversar</a>
+      <button class="lang-toggle" id="langToggle">EN</button>
+    </div>
+  </nav>
+</div>
+
+<div class="page-content">
+
+  <!-- Hero -->
+  <section class="hero container" id="hero">
+    <p class="hero-label" data-pt="— Product Designer criando experiências que importam" data-en="— Product Designer creating experiences that matter">— Product Designer criando experiências que importam</p>
+    <div class="hero-name">
+      <span class="first">Dan</span>
+      <span class="last">Trindade</span>
+    </div>
+    <div class="hero-divider"></div>
+    <p class="hero-bio" data-pt="Eu projeto sistemas e interfaces que equilibram objetivos de negócio com necessidades humanas, trazendo clareza à complexidade por meio de pesquisa, iteração e colaboração." data-en="I design systems and interfaces that balance business goals with human needs, bringing clarity to complexity through research, iteration, and collaboration.">Eu projeto sistemas e interfaces que equilibram objetivos de negócio com necessidades humanas, trazendo clareza à complexidade por meio de pesquisa, iteração e colaboração.</p>
+    <a href="#work" class="btn btn-solid btn-lg" style="width:fit-content" data-pt="Veja meu trabalho" data-en="See my work">Veja meu trabalho</a>
+  </section>
+
+  <!-- Philosophy cards -->
+  <section class="container" id="values">
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon-wrap">
+          <div class="icon-img-wrap">
+            <img src="https://www.figma.com/api/mcp/asset/f248557f-c888-4f77-b719-d226e61eb9f1" alt="" />
+          </div>
+        </div>
+        <p class="card-title" data-pt="Clareza acima de brilhantismo" data-en="Clarity over brilliance">Clareza acima de brilhantismo</p>
+        <p class="card-body" data-pt="As melhores soluções parecem óbvias depois que existem. Um bom design deve parecer inevitável." data-en="The best solutions seem obvious once they exist. Good design should feel inevitable.">As melhores soluções parecem óbvias depois que existem. Um bom design deve parecer inevitável.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap">
+          <div class="icon-img-wrap">
+            <img src="https://www.figma.com/api/mcp/asset/c898d583-8d48-41be-b5e3-61241300d453" alt="" />
+          </div>
+        </div>
+        <p class="card-title" data-pt="Colaboração em aberto" data-en="Open collaboration">Colaboração em aberto</p>
+        <p class="card-body" data-pt="Design não é solitário. Compartilho o processo e o melhor feedback nasce de conversas reais." data-en="Design isn't solitary. I share the process openly and the best feedback comes from real conversations.">Design não é solitário. Compartilho o processo e o melhor feedback nasce de conversas reais.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap">
+          <div class="icon-img-wrap">
+            <img src="https://www.figma.com/api/mcp/asset/5934e6db-f760-4de4-83ed-634fa286af06" alt="" />
+          </div>
+        </div>
+        <p class="card-title" data-pt="Meça o que importa" data-en="Measure what matters">Meça o que importa</p>
+        <p class="card-body" data-pt="Boas decisões de design precisam se conectar a resultados reais, não apenas a boas intenções." data-en="Good design decisions need to connect to real outcomes, not just good intentions.">Boas decisões de design precisam se conectar a resultados reais, não apenas a boas intenções.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section class="container work-section" id="work">
+    <div>
+      <p class="section-label" data-pt="— meu trabalho" data-en="— my work">— meu trabalho</p>
+      <h2 class="section-heading" data-pt="Projetos <em>selecionados</em>" data-en="Selected <em>projects</em>">Projetos <em>selecionados</em></h2>
+    </div>
+
+    <!-- uCondo -->
+    <div class="project-card">
+      <div class="project-details">
+        <div class="project-header">
+          <p class="project-name">uCondo</p>
+          <p class="project-role" data-pt="Especialista Product Designer · 2023 - 2026" data-en="Senior Product Designer · 2023 - 2026">Especialista Product Designer · 2023 - 2026</p>
+          <div class="project-tags">
+            <span class="tag">b2b2c</span>
+            <span class="tag">saas</span>
+            <span class="tag">design system</span>
+            <span class="tag">designops</span>
+            <span class="tag">Mobile</span>
+          </div>
+          <p class="project-desc" data-pt="Atualização do Design System com novo branding e tokens, com foco em SaaS whitelabel e alcançando 20% de aumento no espaço utilizável de funcionalidades." data-en="Design System update with new branding and tokens, focused on SaaS white-label and achieving a 20% increase in usable screen space.">Atualização do Design System com novo branding e tokens, com foco em SaaS whitelabel e alcançando 20% de aumento no espaço utilizável de funcionalidades.</p>
+        </div>
+        <div class="project-highlights">
+          <span data-pt="<strong>+650k</strong> usuários" data-en="<strong>+650k</strong> users"><strong>+650k</strong> usuários</span>
+          <span data-pt="<strong>+20%</strong> de aumento de área útil" data-en="<strong>+20%</strong> usable area increase"><strong>+20%</strong> de aumento de área útil</span>
+          <span data-pt="<strong>+25</strong> white labels criados" data-en="<strong>+25</strong> white labels created"><strong>+25</strong> white labels criados</span>
+        </div>
+        <a href="ucondo.html" class="btn btn-outlined btn-lg" style="width:fit-content" data-pt="Ver projeto" data-en="View project">Ver projeto</a>
+      </div>
+      <div class="project-thumb">
+        <div class="project-thumb-bg">
+          <img src="https://www.figma.com/api/mcp/asset/cbded262-4af3-4057-b510-6a828611011b" alt="" />
+        </div>
+        <div class="project-thumb-gradient"></div>
+        <div class="project-thumb-logo">
+          <img src="https://www.figma.com/api/mcp/asset/a3b522a9-e960-4f71-97f6-7457ff407f91" alt="uCondo" style="height:52px;width:204px;object-fit:contain" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Desty -->
+    <div class="project-card">
+      <div class="project-details">
+        <div class="project-header">
+          <p class="project-name">Desty</p>
+          <p class="project-role" data-pt="Sênior Product Designer · 2022 - 2023" data-en="Senior Product Designer · 2022 - 2023">Sênior Product Designer · 2022 - 2023</p>
+          <div class="project-tags">
+            <span class="tag">design system</span>
+            <span class="tag">saas</span>
+            <span class="tag">cx</span>
+            <span class="tag">Leadership</span>
+            <span class="tag">mobile</span>
+          </div>
+          <p class="project-desc" data-pt="Liderança do squad de Design System e trabalho em estreita colaboração com o time de Customer Experience para criar interfaces escaláveis e alinhadas à marca." data-en="Led the Design System squad and worked closely with the Customer Experience team to create scalable, brand-aligned interfaces.">Liderança do squad de Design System e trabalho em estreita colaboração com o time de Customer Experience para criar interfaces escaláveis e alinhadas à marca.</p>
+        </div>
+        <div class="project-highlights">
+          <span data-pt="<strong>+5</strong> designers liderados" data-en="<strong>+5</strong> designers led"><strong>+5</strong> designers liderados</span>
+          <span data-pt="<strong>+300</strong> componentes e ícones desenhados" data-en="<strong>+300</strong> components and icons designed"><strong>+300</strong> componentes e ícones desenhados</span>
+          <span data-pt="<strong>+8</strong> times impactados" data-en="<strong>+8</strong> teams impacted"><strong>+8</strong> times impactados</span>
+        </div>
+        <a href="desty.html" class="btn btn-outlined btn-lg" style="width:fit-content" data-pt="Ver projeto" data-en="View project">Ver projeto</a>
+      </div>
+      <div class="project-thumb">
+        <div class="project-thumb-bg">
+          <img src="https://www.figma.com/api/mcp/asset/939926c4-a7ea-4580-a5dd-2a22c5f633e5" alt="" />
+        </div>
+        <div class="project-thumb-gradient"></div>
+        <div class="project-thumb-logo">
+          <img src="https://www.figma.com/api/mcp/asset/a53d3837-f2ef-43ba-8ef5-70cfc9ab5211" alt="Desty" style="height:52px;width:156px;object-fit:contain" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Plano B -->
+    <div class="project-card">
+      <div class="project-details">
+        <div class="project-header">
+          <p class="project-name">Plano B</p>
+          <p class="project-role" data-pt="Pleno UI Designer · 2016 - 2022" data-en="Mid-level UI Designer · 2016 - 2022">Pleno UI Designer · 2016 - 2022</p>
+          <div class="project-tags">
+            <span class="tag">Visual design</span>
+            <span class="tag">education</span>
+            <span class="tag">ui/ux</span>
+          </div>
+          <p class="project-desc" data-pt="Criação de interfaces educacionais e materiais visuais para grandes marcas, otimizando os fluxos de entrega em 25%." data-en="Created educational interfaces and visual materials for major brands, optimizing delivery workflows by 25%.">Criação de interfaces educacionais e materiais visuais para grandes marcas, otimizando os fluxos de entrega em 25%.</p>
+        </div>
+        <div class="project-highlights">
+          <span data-pt="<strong>+18</strong> principais marcas brasileiras atendidas" data-en="<strong>+18</strong> top Brazilian brands served"><strong>+18</strong> principais marcas brasileiras atendidas</span>
+          <span data-pt="<strong>+1k</strong> peças criadas" data-en="<strong>+1k</strong> pieces created"><strong>+1k</strong> peças criadas</span>
+          <span data-pt="<strong>+25%</strong> eficiência nos fluxos" data-en="<strong>+25%</strong> workflow efficiency"><strong>+25%</strong> eficiência nos fluxos</span>
+        </div>
+        <a href="planob.html" class="btn btn-outlined btn-lg" style="width:fit-content" data-pt="Ver projeto" data-en="View project">Ver projeto</a>
+      </div>
+      <div class="project-thumb">
+        <div class="project-thumb-bg">
+          <img src="https://www.figma.com/api/mcp/asset/1bff12b4-06f1-4321-803a-8031946c8d0e" alt="" />
+          <img src="https://www.figma.com/api/mcp/asset/3c29af8a-7c42-4cc8-a57a-ad309e39641e" alt="" />
+        </div>
+        <div class="project-thumb-gradient" style="background:linear-gradient(to bottom,rgba(247,243,238,0.08) 8%,#f7f3ee 93%)"></div>
+        <div class="project-thumb-logo">
+          <img src="https://www.figma.com/api/mcp/asset/e94e0714-eae6-4792-8ab7-bbd73051bdc4" alt="Plano B" style="height:64px;width:153px;object-fit:contain" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="container about-section" id="about">
+    <div>
+      <p class="section-label" data-pt="— sobre" data-en="— about">— sobre</p>
+      <h2 class="section-heading" data-pt="Designer, <em>Thinker, Builder.</em>" data-en="Designer, <em>Thinker, Builder.</em>">Designer, <em>Thinker, Builder.</em></h2>
+    </div>
+    <div class="bio-layout">
+      <div class="bio-left">
+        <div class="bio-photo-wrap">
+          <img src="https://www.figma.com/api/mcp/asset/2540a8e4-56eb-4caa-9f56-bd7fa8410d36" alt="Dan Trindade" />
+          <div class="bio-name-tag">Dan trindade</div>
+        </div>
+        <div class="bio-details-box">
+          <div class="bio-detail-row">
+            <span class="bio-detail-label" data-pt="Localização" data-en="Location">Localização</span>
+            <span class="bio-detail-value" data-pt="Rio de Janeiro, Brasil" data-en="Rio de Janeiro, Brazil">Rio de Janeiro, Brasil</span>
+          </div>
+          <div class="bio-detail-row">
+            <span class="bio-detail-label" data-pt="Fuso horário" data-en="Time zone">Fuso horário</span>
+            <span class="bio-detail-value">BRT (UTC −3)</span>
+          </div>
+          <div class="bio-detail-row">
+            <span class="bio-detail-label" data-pt="Idiomas" data-en="Languages">Idiomas</span>
+            <span class="bio-detail-value" data-pt="Português (nativo), Inglês (fluente)" data-en="Portuguese (native), English (fluent)">Português (nativo), Inglês (fluente)</span>
+          </div>
+        </div>
+      </div>
+      <div class="bio-right">
+        <div class="bio-text" data-pt="<p>Sou Product Designer com mais de 10 anos de experiência criando experiências digitais funcionais, escaláveis e centradas nas pessoas. Atuo principalmente em UI/UX, Design Systems e DesignOps — desde a arquitetura de tokens até a colaboração estratégica com squads.</p><p>Tenho experiência em todo o ciclo de vida do produto: conduzo sprints de discovery, facilito workshops com stakeholders, estruturo e evoluo design systems e entrego funcionalidades mesmo em cenários de prazo apertado. Lido bem com ambiguidade e me sinto motivado por problemas complexos.</p><p>Gosto de transformar motivações e necessidades dos usuários em interfaces escaláveis e consistentes. Procuro sempre conectar decisões de design a métricas de negócio e trabalhar de forma próxima com engenharia. Meu pensamento é guiado por uma visão sistêmica, buscando equilíbrio entre experiência do usuário, viabilidade técnica e impacto no produto.</p>" data-en="<p>I'm a Product Designer with 10+ years of experience creating functional, scalable, and human-centred digital experiences. I work primarily in UI/UX, Design Systems, and DesignOps — from token architecture to strategic collaboration with squads.</p><p>I have experience across the full product lifecycle: I run discovery sprints, facilitate stakeholder workshops, structure and evolve design systems, and ship features even under tight deadlines. I handle ambiguity well and thrive on complex problems.</p><p>I enjoy turning user motivations and needs into scalable, consistent interfaces. I always aim to connect design decisions to business metrics and work closely with engineering. My thinking is guided by a systems mindset, seeking balance between user experience, technical feasibility, and product impact.</p>">
+          <p>Sou Product Designer com mais de 10 anos de experiência criando experiências digitais funcionais, escaláveis e centradas nas pessoas. Atuo principalmente em UI/UX, Design Systems e DesignOps — desde a arquitetura de tokens até a colaboração estratégica com squads.</p>
+          <p>Tenho experiência em todo o ciclo de vida do produto: conduzo sprints de discovery, facilito workshops com stakeholders, estruturo e evoluo design systems e entrego funcionalidades mesmo em cenários de prazo apertado. Lido bem com ambiguidade e me sinto motivado por problemas complexos.</p>
+          <p>Gosto de transformar motivações e necessidades dos usuários em interfaces escaláveis e consistentes. Procuro sempre conectar decisões de design a métricas de negócio e trabalhar de forma próxima com engenharia. Meu pensamento é guiado por uma visão sistêmica, buscando equilíbrio entre experiência do usuário, viabilidade técnica e impacto no produto.</p>
+        </div>
+        <blockquote class="bio-quote" data-pt="O bom design é invisível quando funciona, ele simplesmente faz sentido." data-en="Good design is invisible when it works — it simply makes sense.">O bom design é invisível quando funciona, ele simplesmente faz sentido.</blockquote>
+        <div class="skills-grid">
+          <div class="skill-col">
+            <p class="skill-col-title">Design</p>
+            <ul>
+              <li>Product Design</li>
+              <li>UX Research</li>
+              <li>Design Systems</li>
+              <li>Interaction Design</li>
+              <li>Visual Design</li>
+            </ul>
+          </div>
+          <div class="skill-col">
+            <p class="skill-col-title" data-pt="Estratégia" data-en="Strategy">Estratégia</p>
+            <ul data-pt="<li>Discovery &amp; Framing</li><li>Workshops com Stakeholders</li><li>Jobs-to-be-Done</li><li>Planejamento de Roadmap</li><li>Alinhamento de OKRs</li>" data-en="<li>Discovery &amp; Framing</li><li>Stakeholder Workshops</li><li>Jobs-to-be-Done</li><li>Roadmap Planning</li><li>OKR Alignment</li>">
+              <li>Discovery & Framing</li>
+              <li>Workshops com Stakeholders</li>
+              <li>Jobs-to-be-Done</li>
+              <li>Planejamento de Roadmap</li>
+              <li>Alinhamento de OKRs</li>
+            </ul>
+          </div>
+          <div class="skill-col">
+            <p class="skill-col-title" data-pt="Ferramentas &amp; Craft" data-en="Tools &amp; Craft">Ferramentas & Craft</p>
+            <ul>
+              <li>Figma (expert)</li>
+              <li>Monday / ClickUp</li>
+              <li>HTML / CSS / Storybook</li>
+              <li>Notion / Miro</li>
+              <li>Supernova</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="container process-section" id="process">
+    <div>
+      <p class="section-label" data-pt="— Processo" data-en="— Process">— Processo</p>
+      <h2 class="section-heading" data-pt="Como eu <em>trabalho</em>" data-en="How I <em>work</em>">Como eu <em>trabalho</em></h2>
+    </div>
+    <div class="process-cards">
+      <div class="process-card">
+        <p class="process-num">01</p>
+        <p class="process-title">Discover</p>
+        <p class="process-body" data-pt="Entender o problema antes de tocar em qualquer ferramenta. Entrevistas com usuários, análise competitiva, mapeamento de stakeholders e definição da pergunta que vale ser respondida." data-en="Understand the problem before touching any tool. User interviews, competitive analysis, stakeholder mapping, and defining the question worth answering.">Entender o problema antes de tocar em qualquer ferramenta. Entrevistas com usuários, análise competitiva, mapeamento de stakeholders e definição da pergunta que vale ser respondida.</p>
+      </div>
+      <div class="process-card">
+        <p class="process-num">02</p>
+        <p class="process-title">Define</p>
+        <p class="process-body" data-pt="Sintetizar descobertas em declarações claras de problema, critérios de sucesso e restrições. Alinhar o time sobre o que estamos resolvendo e por que isso importa agora para todos." data-en="Synthesise findings into clear problem statements, success criteria, and constraints. Align the team on what we're solving and why it matters right now.">Sintetizar descobertas em declarações claras de problema, critérios de sucesso e restrições. Alinhar o time sobre o que estamos resolvendo e por que isso importa agora para todos.</p>
+      </div>
+      <div class="process-card">
+        <p class="process-num">03</p>
+        <p class="process-title">Design</p>
+        <p class="process-body" data-pt="Explorar amplamente, depois afunilar com intenção e precisão. De fluxos brutos até alta fidelidade — sempre testando e validando hipóteses com usuários reais ao longo de todo o caminho." data-en="Explore broadly, then narrow with intention and precision. From rough flows to high fidelity — always testing and validating hypotheses with real users along the way.">Explorar amplamente, depois afunilar com intenção e precisão. De fluxos brutos até alta fidelidade — sempre testando e validando hipóteses com usuários reais ao longo de todo o caminho.</p>
+      </div>
+      <div class="process-card">
+        <p class="process-num">04</p>
+        <p class="process-title">Deliver</p>
+        <p class="process-body" data-pt="Entregar algo real e funcional. Handoffs cuidadosos, suporte ativo em QA, medição pós-lançamento — aprender com os resultados e alimentar o próximo ciclo de melhoria contínua." data-en="Ship something real and functional. Careful handoffs, active QA support, post-launch measurement — learning from the results and feeding the next cycle of continuous improvement.">Entregar algo real e funcional. Handoffs cuidadosos, suporte ativo em QA, medição pós-lançamento — aprender com os resultados e alimentar o próximo ciclo de melhoria contínua.</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-content -->
+
+<!-- Brands -->
+<div class="brands-section">
+  <p class="brands-label" data-pt="Já colaborei com marcas como" data-en="I've collaborated with brands like">Já colaborei com marcas como</p>
+  <div class="brands-marquee">
+    <div class="brands-inner">
+
+      <!-- set 1 -->
+      <div class="brands-set">
+        <!-- popcode: 157×40, crop vertical -->
+        <div class="logo-wrap" style="width:157px">
+          <img src="https://www.figma.com/api/mcp/asset/14a550bf-34c7-4996-aece-b53da529699c" alt="popcode"
+               style="width:100%;height:165.48%;top:-32.74%;left:0" />
+        </div>
+        <!-- Plano B: 120×40, fill simples -->
+        <div class="logo-wrap logo-fill" style="width:120px">
+          <img src="https://www.figma.com/api/mcp/asset/37a8cd58-6854-42c5-a9a7-514e9fc495d6" alt="Plano B" />
+        </div>
+        <!-- Coca-Cola: 177×40, cover -->
+        <div class="logo-wrap logo-cover" style="width:177px">
+          <img src="https://www.figma.com/api/mcp/asset/5aa697e1-83b6-4173-a7ee-0392d5b1f2f6" alt="Coca-Cola" />
+        </div>
+        <!-- ESPM: 96×40, cover -->
+        <div class="logo-wrap logo-cover" style="width:96px">
+          <img src="https://www.figma.com/api/mcp/asset/ed20c5f3-452a-4e30-8f4d-5fd609d9cf5e" alt="ESPM" />
+        </div>
+        <!-- Petrobras: 90×40, cover -->
+        <div class="logo-wrap logo-cover" style="width:90px">
+          <img src="https://www.figma.com/api/mcp/asset/f967a6a8-8150-4f84-93e1-2ae280860fef" alt="Petrobras" />
+        </div>
+        <!-- Fundação RM: 107×40, crop vertical -->
+        <div class="logo-wrap" style="width:107px">
+          <img src="https://www.figma.com/api/mcp/asset/cceeaab1-57fe-4a45-bfe4-e9e33bd7a36a" alt="Fundação Roberto Marinho"
+               style="width:100%;height:138.46%;top:0;left:0" />
+        </div>
+        <!-- saeb: 201×40, cover -->
+        <div class="logo-wrap logo-cover" style="width:201px">
+          <img src="https://www.figma.com/api/mcp/asset/acae3af3-3878-499b-aa15-9727502de0e9" alt="saeb" />
+        </div>
+        <!-- inep: 114×40, complex crop -->
+        <div class="logo-wrap" style="width:114px">
+          <img src="https://www.figma.com/api/mcp/asset/da04fe88-6800-4a97-848d-f739bb95a9db" alt="INEP"
+               style="width:126.48%;height:177.21%;top:-38.6%;left:-13.24%" />
+        </div>
+        <!-- logo 22: 115×40 complex -->
+        <div class="logo-wrap" style="width:115px">
+          <img src="https://www.figma.com/api/mcp/asset/ce381af6-d752-4053-a235-7d923bffe1e6" alt="Brand"
+               style="width:339.65%;height:251.52%;top:-75.76%;left:-119.82%" />
+        </div>
+        <!-- logo 21: 117×40 complex -->
+        <div class="logo-wrap" style="width:117px">
+          <img src="https://www.figma.com/api/mcp/asset/57537178-77ce-4c83-9333-a0aada755838" alt="Brand"
+               style="width:149.39%;height:294.64%;top:-97.32%;left:-24.7%" />
+        </div>
+        <!-- logo 18: 125×40 crop vertical -->
+        <div class="logo-wrap" style="width:125px">
+          <img src="https://www.figma.com/api/mcp/asset/0d2bd908-d585-4f5e-b375-61fc5cce764c" alt="Brand"
+               style="width:100%;height:220.15%;top:-60.07%;left:0" />
+        </div>
+        <!-- logo 19: 131×40 crop vertical -->
+        <div class="logo-wrap" style="width:131px">
+          <img src="https://www.figma.com/api/mcp/asset/f286d657-296e-4dcb-b223-7d0e088d5f3d" alt="Brand"
+               style="width:100%;height:183.67%;top:-41.84%;left:0" />
+        </div>
+      </div>
+
+      <!-- set 2 — clone para loop contínuo -->
+      <div class="brands-set" aria-hidden="true">
+        <div class="logo-wrap" style="width:157px">
+          <img src="https://www.figma.com/api/mcp/asset/14a550bf-34c7-4996-aece-b53da529699c" alt=""
+               style="width:100%;height:165.48%;top:-32.74%;left:0" />
+        </div>
+        <div class="logo-wrap logo-fill" style="width:120px">
+          <img src="https://www.figma.com/api/mcp/asset/37a8cd58-6854-42c5-a9a7-514e9fc495d6" alt="" />
+        </div>
+        <div class="logo-wrap logo-cover" style="width:177px">
+          <img src="https://www.figma.com/api/mcp/asset/5aa697e1-83b6-4173-a7ee-0392d5b1f2f6" alt="" />
+        </div>
+        <div class="logo-wrap logo-cover" style="width:96px">
+          <img src="https://www.figma.com/api/mcp/asset/ed20c5f3-452a-4e30-8f4d-5fd609d9cf5e" alt="" />
+        </div>
+        <div class="logo-wrap logo-cover" style="width:90px">
+          <img src="https://www.figma.com/api/mcp/asset/f967a6a8-8150-4f84-93e1-2ae280860fef" alt="" />
+        </div>
+        <div class="logo-wrap" style="width:107px">
+          <img src="https://www.figma.com/api/mcp/asset/cceeaab1-57fe-4a45-bfe4-e9e33bd7a36a" alt=""
+               style="width:100%;height:138.46%;top:0;left:0" />
+        </div>
+        <div class="logo-wrap logo-cover" style="width:201px">
+          <img src="https://www.figma.com/api/mcp/asset/acae3af3-3878-499b-aa15-9727502de0e9" alt="" />
+        </div>
+        <div class="logo-wrap" style="width:114px">
+          <img src="https://www.figma.com/api/mcp/asset/da04fe88-6800-4a97-848d-f739bb95a9db" alt=""
+               style="width:126.48%;height:177.21%;top:-38.6%;left:-13.24%" />
+        </div>
+        <div class="logo-wrap" style="width:115px">
+          <img src="https://www.figma.com/api/mcp/asset/ce381af6-d752-4053-a235-7d923bffe1e6" alt=""
+               style="width:339.65%;height:251.52%;top:-75.76%;left:-119.82%" />
+        </div>
+        <div class="logo-wrap" style="width:117px">
+          <img src="https://www.figma.com/api/mcp/asset/57537178-77ce-4c83-9333-a0aada755838" alt=""
+               style="width:149.39%;height:294.64%;top:-97.32%;left:-24.7%" />
+        </div>
+        <div class="logo-wrap" style="width:125px">
+          <img src="https://www.figma.com/api/mcp/asset/0d2bd908-d585-4f5e-b375-61fc5cce764c" alt=""
+               style="width:100%;height:220.15%;top:-60.07%;left:0" />
+        </div>
+        <div class="logo-wrap" style="width:131px">
+          <img src="https://www.figma.com/api/mcp/asset/f286d657-296e-4dcb-b223-7d0e088d5f3d" alt=""
+               style="width:100%;height:183.67%;top:-41.84%;left:0" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer / Contact -->
+<footer class="footer-section" id="contact">
+  <div class="contact-block">
+    <p class="contact-label" data-pt="— Contato" data-en="— Contact">— Contato</p>
+    <h2 class="contact-heading" data-pt="<em>Vamos </em>construir<br><em>algo </em>juntos" data-en="<em>Let's </em>build<br><em>something </em>together"><em>Vamos </em>construir<br><em>algo </em>juntos</h2>
+    <div class="contact-details">
+      <div class="contact-avail">
+        <div class="available-badge">
+          <div class="available-dot"></div>
+          <span class="available-text" data-pt="Disponível para novos projetos" data-en="Available for new projects">Disponível para novos projetos</span>
+        </div>
+        <p class="contact-avail-text" data-pt="Estou aberto a posições full-time, contratos e consultorias.<br><br>Se você tem um desafio em mente ou quer explorar como o design pode melhorar seu produto, vamos conversar." data-en="I'm open to full-time positions, contracts, and consulting.<br><br>If you have a challenge in mind or want to explore how design can improve your product, let's talk.">Estou aberto a posições full-time, contratos e consultorias.<br><br>Se você tem um desafio em mente ou quer explorar como o design pode melhorar seu produto, vamos conversar.</p>
+      </div>
+      <div class="contact-methods">
+        <a href="mailto:dantrindade.design@gmail.com" class="contact-method">
+          <div class="contact-method-icon">
+            <div class="icon-img-wrap">
+              <img src="https://www.figma.com/api/mcp/asset/5db9adad-ba94-4ec0-b9a3-5e95ef970be1" alt="" />
+            </div>
+          </div>
+          <div class="contact-method-info">
+            <p class="contact-method-label">E-mail</p>
+            <p class="contact-method-value">dantrindade.design@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/dantrindade/" target="_blank" rel="noopener" class="contact-method">
+          <div class="contact-method-icon">
+            <div class="icon-img-wrap">
+              <img src="https://www.figma.com/api/mcp/asset/9dd3bd10-63db-4f5b-a893-bdb51188e08f" alt="" />
+            </div>
+          </div>
+          <div class="contact-method-info">
+            <p class="contact-method-label">Linkedin</p>
+            <p class="contact-method-value">www.linkedin.com/in/dantrindade/</p>
+          </div>
+        </a>
+        <a href="https://wa.me/5521983071496" target="_blank" rel="noopener" class="contact-method">
+          <div class="contact-method-icon">
+            <div class="icon-img-wrap">
+              <img src="https://www.figma.com/api/mcp/asset/129aa05a-6923-4510-ad82-2eef83190b87" alt="" />
+            </div>
+          </div>
+          <div class="contact-method-info">
+            <p class="contact-method-label" data-pt="Telefone / Whatsapp" data-en="Phone / Whatsapp">Telefone / Whatsapp</p>
+            <p class="contact-method-value">+55 21 98307-1496</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar container">
+    <p class="footer-copy" data-pt="© 2026 Dan Trindade. Todos os direitos reservados." data-en="© 2026 Dan Trindade. All rights reserved.">© 2026 Dan Trindade. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+
+<script>
+  const stickyNavWrap = document.querySelector('.sticky-nav-wrap');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 0) {
+      stickyNavWrap.classList.add('scrolled');
+    } else {
+      stickyNavWrap.classList.remove('scrolled');
+    }
+  });
+
+  // ── Language switcher ──
+  (function () {
+    const LANG_KEY = 'portfolio-lang';
+    const btn = document.getElementById('langToggle');
+    function applyLang(lang) {
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        el.innerHTML = lang === 'en' ? (el.dataset.en || el.dataset.pt) : el.dataset.pt;
+      });
+      if (btn) btn.textContent = lang === 'en' ? 'PT' : 'EN';
+      localStorage.setItem(LANG_KEY, lang);
+    }
+    if (btn) btn.addEventListener('click', () => {
+      applyLang((localStorage.getItem(LANG_KEY) || 'pt') === 'pt' ? 'en' : 'pt');
+    });
+    applyLang(localStorage.getItem(LANG_KEY) || 'pt');
+  })();
+</script>
+
+</body>
+</html>

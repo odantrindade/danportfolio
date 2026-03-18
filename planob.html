@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plano B — Dan Trindade</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f3ee;
+      --dark: #131618;
+      --text: #4c575d;
+      --light: #eeeff0;
+      --border: #caced0;
+      --border-icon: #8c9498;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+    /* ── Marquee ── */
+    .marquee-wrap { background: var(--dark); color: var(--light); height: 36px; overflow: hidden; display: flex; align-items: center; }
+    .marquee-inner { display: flex; width: max-content; animation: scrollText 30s linear infinite; }
+    .marquee-set { display: flex; gap: 24px; align-items: center; white-space: nowrap; flex-shrink: 0; font-size: 10px; font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: .04em; padding-right: 24px; }
+    .marquee-set .dot { opacity: .4; font-weight: 700; }
+    .marquee-set .dim { opacity: .48; }
+    @keyframes scrollText { from { transform: translateX(0); } to { transform: translateX(-25%); } }
+
+    /* ── Sticky nav ── */
+    .sticky-nav-wrap { position: sticky; top: 0; z-index: 100; width: 100%; display: flex; justify-content: center; background: var(--bg); transition: border-bottom .2s; }
+    .sticky-nav-wrap.scrolled { border-bottom: 1px solid var(--border); }
+    .nav { height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; width: 100%; max-width: 1200px; }
+    .nav-logo { flex-shrink: 0; line-height: 0; }
+    .nav-logo img { width: 89px; height: 28px; display: block; object-fit: contain; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 6px; justify-content: center; height: 40px; padding: 0 20px; font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 16px; cursor: pointer; transition: opacity .2s, background .2s, color .2s; text-decoration: none; border: none; background: none; }
+    .btn-ghost { color: var(--dark); opacity: .4; }
+    .btn-ghost:hover { opacity: 1; }
+    .lang-toggle { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--border); color: var(--text); padding: 0 10px; height: 40px; cursor: pointer; background: none; opacity: .5; transition: opacity .15s; display: inline-flex; align-items: center; }
+    .lang-toggle:hover { opacity: 1; }
+    .btn-solid-light { background: var(--light); color: var(--dark); height: 48px; }
+    .btn-solid-light:hover { opacity: .85; }
+    .btn-outlined-light { border: 1px solid var(--light); color: var(--light); height: 48px; }
+    .btn-outlined-light:hover { background: var(--light); color: var(--dark); }
+
+    /* ── Layout ── */
+    .container { width: 100%; max-width: 1200px; padding: 0 10px; }
+    .section-label { font-family: 'Exo 2', sans-serif; font-size: 12px; font-weight: 400; text-transform: uppercase; opacity: .4; color: var(--dark); letter-spacing: .04em; }
+    .section-heading { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 64px; color: var(--dark); line-height: 1; }
+    .section-heading em { font-family: 'Exo 2', sans-serif; font-weight: 300; font-style: italic; }
+
+    /* ── Hero ── */
+    .hero { padding: 80px 0 0; display: flex; flex-direction: column; gap: 24px; max-width: 1200px; width: 100%; }
+    .hero-tags { display: flex; gap: 8px; }
+    .tag { background: rgba(202,206,208,.2); border: 1px solid var(--border); padding: 4px 8px; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 12px; color: var(--text); text-transform: uppercase; line-height: 1.5; }
+    .hero-title-row { display: flex; align-items: flex-end; justify-content: space-between; }
+    .hero-name { display: flex; flex-direction: column; font-size: 80px; font-style: italic; line-height: 1; }
+    .hero-name .first { font-family: 'Exo 2', sans-serif; font-weight: 900; color: var(--dark); }
+    .hero-name .last  { font-family: 'Exo 2', sans-serif; font-weight: 100; color: var(--text); }
+    .hero-logo { width: 191px; height: 80px; position: relative; overflow: hidden; flex-shrink: 0; }
+    .hero-logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+    .hero-divider { width: 100%; height: 1px; background: var(--border); }
+
+    /* ── Hero body: description + meta ── */
+    .hero-body { display: flex; gap: 24px; align-items: flex-start; }
+    .hero-desc { flex: 0 0 auto; width: 720px; border-right: 1px solid var(--border); padding-right: 64px; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 18px; color: var(--text); line-height: 1.5; }
+    .hero-desc p + p { margin-top: 1em; }
+    .hero-meta { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .meta-row { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding: 16px; font-size: 14px; color: var(--text); }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-label { font-family: 'Exo 2', sans-serif; font-weight: 700; line-height: 1.5; }
+    .meta-value { font-family: 'Outfit', sans-serif; font-weight: 300; line-height: 1.5; }
+
+    /* ── Dark band ── */
+    .dark-band { background: var(--dark); width: 100%; display: flex; justify-content: center; padding: 80px 10px; }
+    .dark-band .inner { width: 100%; max-width: 1200px; display: flex; align-items: flex-start; justify-content: space-between; }
+    .dark-band .band-label { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; opacity: .64; color: var(--light); flex: 1; }
+    .dark-band .band-quote { width: 720px; border-left: 2px solid var(--light); padding-left: 16px; font-family: 'Exo 2', sans-serif; font-weight: 400; font-style: italic; font-size: 32px; color: var(--light); line-height: 1.5; }
+    .dark-band .band-quote strong { font-weight: 700; }
+
+    /* ── Clients + gallery ── */
+    .content-section { display: flex; flex-direction: column; gap: 24px; max-width: 1200px; width: 100%; padding: 80px 10px 0; }
+    .clients-header { display: flex; align-items: center; justify-content: space-between; }
+    .clients-header .section-label { opacity: .4; }
+    .clients-row { display: flex; flex-wrap: wrap; gap: auto; align-items: center; }
+    .client-chip { border: 1px solid var(--border); padding: 16px; margin-right: 15px; font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); line-height: 1.5; white-space: nowrap; }
+
+    /* ── Image grid ── */
+    .img-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 878px; }
+    .img-grid-item { border: 1px solid var(--border); position: relative; overflow: hidden; }
+    .img-grid-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Deliverables list ── */
+    .deliverables { display: flex; flex-direction: column; }
+    .deliverable-row { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding: 16px; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; color: var(--text); line-height: 1.5; }
+    .deliverable-row .arrow { width: 24px; height: 24px; flex-shrink: 0; opacity: .36; display: flex; align-items: center; }
+    .deliverable-row .arrow svg { display: block; }
+
+    /* ── Impact (dark) ── */
+    .impact-section { background: var(--dark); width: 100%; display: flex; justify-content: center; padding: 80px 10px; }
+    .impact-inner { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 24px; }
+    .impact-label { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; opacity: .64; color: var(--light); }
+    .impact-cards { display: flex; gap: 24px; }
+    .impact-card { flex: 1; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .impact-num { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 40px; color: var(--light); opacity: .4; line-height: 1.5; }
+    .impact-text { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; color: var(--light); line-height: 1.5; }
+
+    /* ── MBP mockups ── */
+    .mbp-section { display: flex; flex-direction: column; gap: 24px; max-width: 1200px; width: 100%; padding: 80px 10px 0; }
+    .mbp-row { display: flex; gap: 80px; align-items: flex-start; position: relative; }
+    .mbp-laptop { flex: 1; aspect-ratio: 1080/659; position: relative; overflow: hidden; cursor: pointer; }
+    .mbp-laptop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .mbp-screen { position: absolute; overflow: hidden; pointer-events: none; }
+    .mbp-screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* play indicator — alinhado com a área da tela do laptop */
+    .mbp-play { position: absolute; left: 9.6%; top: 3%; width: 80.7%; height: 72%; display: flex; align-items: center; justify-content: center; z-index: 10; pointer-events: none; }
+    .mbp-play-btn { width: 52px; height: 52px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.22); transition: transform .15s ease, box-shadow .15s ease; }
+    .mbp-laptop:hover .mbp-play-btn { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,0,0,0.3); }
+    .mbp-play-btn svg { margin-left: 3px; }
+    /* modal de vídeo */
+    .video-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.88); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .video-modal.open { opacity: 1; pointer-events: all; }
+    .video-modal-inner { position: relative; width: 82vw; max-width: 1040px; aspect-ratio: 16/9; background: #000; }
+    .video-modal-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; display: block; }
+    .video-modal-close { position: absolute; top: -36px; right: 0; background: none; border: none; color: white; cursor: pointer; font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; opacity: .7; transition: opacity .15s; padding: 0; }
+    .video-modal-close:hover { opacity: 1; }
+
+    /* ── Design cards ── */
+    .design-section { display: flex; flex-direction: column; gap: 24px; max-width: 1200px; width: 100%; padding: 80px 10px 0; }
+    .cards-row { display: flex; gap: 24px; }
+    .card { flex: 1; border: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .card-icon-wrap { border: 1px solid var(--border-icon); padding: 8px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex-shrink: 0; }
+    .card-icon-wrap .icon-img-wrap { position: relative; width: 24px; height: 24px; flex-shrink: 0; }
+    .card-icon-wrap .icon-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+    .card-title { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); line-height: 1.5; }
+    .card-body { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; color: var(--text); line-height: 1.5; }
+
+    /* ── Closing quote ── */
+    .closing-quote-wrap { max-width: 1200px; width: 100%; padding: 80px 10px; }
+    .closing-quote { border-left: 2px solid var(--text); padding-left: 16px; font-family: 'Exo 2', sans-serif; font-weight: 400; font-style: italic; font-size: 32px; color: var(--text); line-height: 1.5; }
+    .closing-quote strong { font-weight: 700; }
+
+    /* ── CTA Footer ── */
+    .cta-footer { background: var(--dark); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 80px; padding-top: 60px; }
+    .cta-block { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 24px; padding: 0 10px; }
+    .cta-sublabel { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 12px; text-transform: uppercase; opacity: .64; color: var(--light); }
+    .cta-heading { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 64px; color: var(--light); line-height: 1; }
+    .cta-heading em { font-family: 'Exo 2', sans-serif; font-weight: 300; font-style: italic; }
+    .cta-actions { display: flex; gap: 16px; align-items: center; padding: 24px 0; }
+    .footer-bar { width: 100%; max-width: 1200px; padding: 0 10px 48px; }
+    .footer-copy { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 16px; color: var(--text); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <div class="marquee-set"><span>Design Systems</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>UI / UX</span><span class="dot">·</span><span class="dim">Product Designer</span><span class="dot">·</span><span>AI UX</span><span class="dot">·</span><span class="dim">Product Discovery</span><span class="dot">·</span><span>Design Tokens</span><span class="dot">·</span><span class="dim">SaaS</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span></div>
+    <div class="marquee-set" aria-hidden="true"><span>Design Systems</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>UI / UX</span><span class="dot">·</span><span class="dim">Product Designer</span><span class="dot">·</span><span>AI UX</span><span class="dot">·</span><span class="dim">Product Discovery</span><span class="dot">·</span><span>Design Tokens</span><span class="dot">·</span><span class="dim">SaaS</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span></div>
+    <div class="marquee-set" aria-hidden="true"><span>Design Systems</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>UI / UX</span><span class="dot">·</span><span class="dim">Product Designer</span><span class="dot">·</span><span>AI UX</span><span class="dot">·</span><span class="dim">Product Discovery</span><span class="dot">·</span><span>Design Tokens</span><span class="dot">·</span><span class="dim">SaaS</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span></div>
+    <div class="marquee-set" aria-hidden="true"><span>Design Systems</span><span class="dot">·</span><span class="dim">DesignOps</span><span class="dot">·</span><span>UI / UX</span><span class="dot">·</span><span class="dim">Product Designer</span><span class="dot">·</span><span>AI UX</span><span class="dot">·</span><span class="dim">Product Discovery</span><span class="dot">·</span><span>Design Tokens</span><span class="dot">·</span><span class="dim">SaaS</span><span class="dot">·</span><span>Fintech</span><span class="dot">·</span></div>
+  </div>
+</div>
+
+<!-- Nav -->
+<div class="sticky-nav-wrap" id="navWrap">
+  <nav class="nav">
+    <div class="nav-logo">
+      <img src="https://www.figma.com/api/mcp/asset/5b31db00-e74f-49c4-9105-582c7e823ff5" alt="Dan Trindade" />
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="index.html" class="btn btn-ghost" style="opacity:.4;font-size:16px" data-pt="← Todos os projetos" data-en="← All projects">← Todos os projetos</a>
+      <button class="lang-toggle" id="langToggle">EN</button>
+    </div>
+  </nav>
+</div>
+
+<!-- Hero -->
+<div style="display:flex;flex-direction:column;align-items:center;gap:80px;padding-bottom:80px">
+
+  <section class="hero">
+    <div class="hero-tags">
+      <span class="tag">Visual design</span>
+      <span class="tag">Education</span>
+      <span class="tag">UI/UX</span>
+    </div>
+    <div class="hero-title-row">
+      <div class="hero-name">
+        <span class="first">Plano B</span>
+        <span class="last" data-pt="Educação Criativa" data-en="Creative Education">Educação Criativa</span>
+      </div>
+      <div class="hero-logo">
+        <img src="https://www.figma.com/api/mcp/asset/e802a75d-ea95-4cde-b2eb-ab7f73d9fa38" alt="Plano B" />
+      </div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-body">
+      <div class="hero-desc" data-pt="&lt;p&gt;Na Plano B, tive a oportunidade de trabalhar em projetos focados em educação, iniciativas sociais e capacitação.&lt;/p&gt;&lt;p&gt;Colaborei com parceiros renomados como &lt;strong&gt;Coca-Cola&lt;/strong&gt;, &lt;strong&gt;Comitê Olímpico Brasileiro&lt;/strong&gt;, &lt;strong&gt;FRM&lt;/strong&gt;, &lt;strong&gt;INEP&lt;/strong&gt; e &lt;strong&gt;Souza Marques&lt;/strong&gt; — contribuindo com uma ampla variedade de entregas de design em módulos digitais interativos, projetos audiovisuais, apps, websites e materiais educacionais.&lt;/p&gt;&lt;p&gt;Essas experiências me permitiram ampliar meu conhecimento em design e fazer contribuições significativas para o setor educacional, entregando soluções criativas e de impacto.&lt;/p&gt;" data-en="&lt;p&gt;At Plano B, I had the opportunity to work on projects focused on education, social initiatives, and capacity building.&lt;/p&gt;&lt;p&gt;I collaborated with renowned partners such as &lt;strong&gt;Coca-Cola&lt;/strong&gt;, &lt;strong&gt;Brazilian Olympic Committee&lt;/strong&gt;, &lt;strong&gt;FRM&lt;/strong&gt;, &lt;strong&gt;INEP&lt;/strong&gt;, and &lt;strong&gt;Souza Marques&lt;/strong&gt; — contributing a wide variety of design deliverables across interactive digital modules, audiovisual projects, apps, websites, and educational materials.&lt;/p&gt;&lt;p&gt;These experiences allowed me to broaden my design knowledge and make meaningful contributions to the education sector, delivering creative and impactful solutions.&lt;/p&gt;">
+        <p>Na Plano B, tive a oportunidade de trabalhar em projetos focados em educação, iniciativas sociais e capacitação.</p>
+        <p>Colaborei com parceiros renomados como <strong>Coca-Cola</strong>, <strong>Comitê Olímpico Brasileiro</strong>, <strong>FRM</strong>, <strong>INEP</strong> e <strong>Souza Marques</strong> — contribuindo com uma ampla variedade de entregas de design em módulos digitais interativos, projetos audiovisuais, apps, websites e materiais educacionais.</p>
+        <p>Essas experiências me permitiram ampliar meu conhecimento em design e fazer contribuições significativas para o setor educacional, entregando soluções criativas e de impacto.</p>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-row"><span class="meta-label" data-pt="Empresa" data-en="Company">Empresa</span><span class="meta-value">Plano B - Educação Criativa</span></div>
+        <div class="meta-row"><span class="meta-label" data-pt="Cargo" data-en="Role">Cargo</span><span class="meta-value">UI Designer</span></div>
+        <div class="meta-row"><span class="meta-label" data-pt="Período" data-en="Period">Período</span><span class="meta-value">2016 – 2022</span></div>
+        <div class="meta-row"><span class="meta-label" data-pt="Setor" data-en="Sector">Setor</span><span class="meta-value" data-pt="Educação · EdTech · Social" data-en="Education · EdTech · Social">Educação · EdTech · Social</span></div>
+        <div class="meta-row" style="border-bottom:none"><span class="meta-label" data-pt="Localização" data-en="Location">Localização</span><span class="meta-value" data-pt="Rio de Janeiro, Brasil" data-en="Rio de Janeiro, Brazil">Rio de Janeiro, Brasil</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Dark context quote -->
+<div class="dark-band">
+  <div class="inner">
+    <span class="band-label" data-pt="— Contexto" data-en="— Context">— Contexto</span>
+    <blockquote class="band-quote" data-pt="Seis anos projetando para o setor educacional — atendendo &lt;strong&gt;grandes marcas brasileiras&lt;/strong&gt; e construindo ferramentas que tornaram o aprendizado mais acessível, envolvente e consistente em escala." data-en="Six years designing for the education sector — serving &lt;strong&gt;major Brazilian brands&lt;/strong&gt; and building tools that made learning more accessible, engaging, and consistent at scale.">
+      Seis anos projetando para o setor educacional — atendendo <strong>grandes marcas brasileiras</strong> e construindo ferramentas que tornaram o aprendizado mais acessível, envolvente e consistente em escala.
+    </blockquote>
+  </div>
+</div>
+
+<!-- Clients + Gallery + Deliverables -->
+<div style="display:flex;flex-direction:column;align-items:center;padding-bottom:80px">
+
+  <section class="content-section">
+    <!-- Clients header -->
+    <div class="clients-header">
+      <span class="section-label" data-pt="— parceiros e clientes" data-en="— partners and clients">— parceiros e clientes</span>
+      <span class="section-label" style="opacity:.4" data-pt="e muitos outros" data-en="and many more">e muitos outros</span>
+    </div>
+    <div class="clients-row">
+      <div class="client-chip">Coca-Cola</div>
+      <div class="client-chip">Comitê Olímpico Brasileiro</div>
+      <div class="client-chip">Petrobras</div>
+      <div class="client-chip">INEP</div>
+      <div class="client-chip">Cesgranrio</div>
+      <div class="client-chip">FRM</div>
+      <div class="client-chip">Souza Marques</div>
+      <div class="client-chip">SAEB</div>
+    </div>
+
+    <!-- 2×3 image grid -->
+    <div class="img-grid">
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/eddd4487-0e3b-4d3a-bd67-2652b8c5965e" alt="" /></div>
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/9dd7a426-c709-40d7-b723-75d24c063ac1" alt="" /></div>
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/ecad1ce2-1aed-4c43-9b44-d34615fd17c2" alt="" /></div>
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/26d315b8-db01-4394-ac3c-32b0960a663f" alt="" /></div>
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/e110b9c3-4401-4545-9527-c69e0ae1a92f" alt="" /></div>
+      <div class="img-grid-item"><img src="https://www.figma.com/api/mcp/asset/ab6d8a91-6783-4626-8860-abecd55641b7" alt="" /></div>
+    </div>
+
+    <!-- Deliverables list -->
+    <div class="deliverables">
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Layouts e interfaces para módulos educacionais online interativos — estruturados, acessíveis e visuais" data-en="Layouts and interfaces for interactive online educational modules — structured, accessible, and visual">Layouts e interfaces para módulos educacionais online interativos — estruturados, acessíveis e visuais</span>
+      </div>
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Storyboards para projetos audiovisuais — conectando roteiro e produção visual" data-en="Storyboards for audiovisual projects — bridging script and visual production">Storyboards para projetos audiovisuais — conectando roteiro e produção visual</span>
+      </div>
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Protótipos para apps e websites — de conceitos em baixa fidelidade até mockups interativos" data-en="Prototypes for apps and websites — from low-fidelity concepts to interactive mockups">Protótipos para apps e websites — de conceitos em baixa fidelidade até mockups interativos</span>
+      </div>
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Formatação de manuais e guias de estudo — claros, estruturados e alinhados à marca" data-en="Formatting of manuals and study guides — clear, structured, and brand-aligned">Formatação de manuais e guias de estudo — claros, estruturados e alinhados à marca</span>
+      </div>
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Apresentações para sessões de treinamento e programas educacionais" data-en="Presentations for training sessions and educational programs">Apresentações para sessões de treinamento e programas educacionais</span>
+      </div>
+      <div class="deliverable-row">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Newsletters para comunicação educacional interna e externa" data-en="Newsletters for internal and external educational communication">Newsletters para comunicação educacional interna e externa</span>
+      </div>
+      <div class="deliverable-row" style="border-bottom:none">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="+20 identidades visuais desenvolvidas especificamente para conteúdo educacional e materiais de curso" data-en="+20 visual identities developed specifically for educational content and course materials">+20 identidades visuais desenvolvidas especificamente para conteúdo educacional e materiais de curso</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Impact (dark) -->
+<div class="impact-section">
+  <div class="impact-inner">
+    <span class="impact-label" data-pt="— impacto" data-en="— impact">— impacto</span>
+    <div class="impact-cards">
+      <div class="impact-card">
+        <p class="impact-num">+18</p>
+        <p class="impact-text" data-pt="Grandes marcas brasileiras atendidas" data-en="Major Brazilian brands served">Grandes marcas brasileiras atendidas</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-num">+1k</p>
+        <p class="impact-text" data-pt="Aulas interativas criadas para diversos clientes" data-en="Interactive classes created for various clients">Aulas interativas criadas para diversos clientes</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-num">+25%</p>
+        <p class="impact-text" data-pt="Ganho de eficiência no processo de design e desenvolvimento" data-en="Efficiency gain in the design and development process">Ganho de eficiência no processo de design e desenvolvimento</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-num">+20</p>
+        <p class="impact-text" data-pt="Identidades visuais criadas para conteúdo educacional" data-en="Visual identities created for educational content">Identidades visuais criadas para conteúdo educacional</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MBP Mockup section -->
+<div style="display:flex;flex-direction:column;align-items:center">
+  <section class="mbp-section">
+    <div>
+      <p class="section-label" style="margin-bottom:16px" data-pt="— módulos de cursos interativos" data-en="— interactive course modules">— módulos de cursos interativos</p>
+      <div class="deliverable-row" style="border-bottom:1px solid var(--border);padding-left:0">
+        <span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4c575d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        <span data-pt="Clique nas thumbs para ver os vídeos." data-en="Click the thumbnails to watch the videos.">Clique nas thumbs para ver os vídeos.</span>
+      </div>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="mbp-row">
+      <div class="mbp-laptop" data-video="https://player.vimeo.com/video/1174626197?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479">
+        <img src="https://www.figma.com/api/mcp/asset/31dc6535-0df1-4139-aeeb-d571289948c0" alt="MacBook mockup" />
+        <div class="mbp-screen" style="left:9.6%;top:3%;width:80.7%;height:72%">
+          <img src="https://www.figma.com/api/mcp/asset/9698ebc2-5ac9-475a-a447-044318f4db0e" alt="Ocyan" />
+        </div>
+        <div class="mbp-play">
+          <div class="mbp-play-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 3.5l10 5.5-10 5.5V3.5z" fill="#131618"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="mbp-laptop" data-video="https://player.vimeo.com/video/1174626402?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479">
+        <img src="https://www.figma.com/api/mcp/asset/31dc6535-0df1-4139-aeeb-d571289948c0" alt="MacBook mockup" />
+        <div class="mbp-screen" style="left:9.6%;top:3%;width:80.7%;height:72%">
+          <img src="https://www.figma.com/api/mcp/asset/6b1461a2-7b42-4984-bfd7-ffc221d63aa1" alt="SM" />
+        </div>
+        <div class="mbp-play">
+          <div class="mbp-play-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 3.5l10 5.5-10 5.5V3.5z" fill="#131618"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="mbp-row">
+      <div class="mbp-laptop" data-video="https://player.vimeo.com/video/1174626327?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&app_id=58479">
+        <img src="https://www.figma.com/api/mcp/asset/31dc6535-0df1-4139-aeeb-d571289948c0" alt="MacBook mockup" />
+        <div class="mbp-screen" style="left:9.6%;top:3%;width:80.7%;height:72%">
+          <img src="https://www.figma.com/api/mcp/asset/ddc325d2-1a2f-4800-9b0c-f407df8be3a2" alt="SAEB" />
+        </div>
+        <div class="mbp-play">
+          <div class="mbp-play-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 3.5l10 5.5-10 5.5V3.5z" fill="#131618"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="mbp-laptop" aria-hidden="true" style="visibility:hidden;pointer-events:none"></div>
+    </div>
+  </section>
+
+  <!-- Design entre disciplinas -->
+  <section class="design-section">
+    <div>
+      <p class="section-label" data-pt="— entregue na jornada" data-en="— delivered on the journey">— entregue na jornada</p>
+      <h2 class="section-heading" style="margin-top:8px" data-pt="Design &lt;em&gt;entre disciplinas&lt;/em&gt;" data-en="Design &lt;em&gt;across disciplines&lt;/em&gt;">Design <em>entre disciplinas</em></h2>
+    </div>
+
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/a9598192-0517-44dd-83b5-c556f67e3519" alt="" /></div></div>
+        <p class="card-title" data-pt="Módulos Interativos" data-en="Interactive Modules">Módulos Interativos</p>
+        <p class="card-body" data-pt="Criação de layouts e interfaces para módulos educacionais online — estruturando conteúdo complexo em experiências de aprendizado envolventes e navegáveis." data-en="Creating layouts and interfaces for online educational modules — structuring complex content into engaging, navigable learning experiences.">Criação de layouts e interfaces para módulos educacionais online — estruturando conteúdo complexo em experiências de aprendizado envolventes e navegáveis.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/6e39436e-39c8-4b5f-9426-b14f2523392e" alt="" /></div></div>
+        <p class="card-title">Storyboarding & AV</p>
+        <p class="card-body" data-pt="Criação de storyboards para projetos audiovisuais — traduzindo briefings educacionais em narrativas visuais cena a cena para equipes de produção." data-en="Creating storyboards for audiovisual projects — translating educational briefs into scene-by-scene visual narratives for production teams.">Criação de storyboards para projetos audiovisuais — traduzindo briefings educacionais em narrativas visuais cena a cena para equipes de produção.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/d920760f-da1c-412a-b720-6b8c7a2d3e60" alt="" /></div></div>
+        <p class="card-title" data-pt="Prototipagem de Apps & Web" data-en="App & Web Prototyping">Prototipagem de Apps & Web</p>
+        <p class="card-body" data-pt="Prototipagem de interfaces para apps mobile e websites — de wireframes em baixa fidelidade até protótipos clicáveis para apresentações a clientes e testes com usuários." data-en="Prototyping interfaces for mobile apps and websites — from low-fidelity wireframes to clickable prototypes for client presentations and user testing.">Prototipagem de interfaces para apps mobile e websites — de wireframes em baixa fidelidade até protótipos clicáveis para apresentações a clientes e testes com usuários.</p>
+      </div>
+    </div>
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/e005e939-ef40-47ac-bfc2-66f79f6cb114" alt="" /></div></div>
+        <p class="card-title" data-pt="Manuais & Guias de Estudo" data-en="Manuals & Study Guides">Manuais & Guias de Estudo</p>
+        <p class="card-body" data-pt="Formatação de manuais de treinamento e guias de estudo para grandes clientes corporativos — equilibrando legibilidade, consistência de marca e hierarquias densas de informação." data-en="Formatting training manuals and study guides for major corporate clients — balancing readability, brand consistency, and dense information hierarchies.">Formatação de manuais de treinamento e guias de estudo para grandes clientes corporativos — equilibrando legibilidade, consistência de marca e hierarquias densas de informação.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/5a9c90bb-0279-4597-8d8f-5c25c024dc2a" alt="" /></div></div>
+        <p class="card-title">Newsletters</p>
+        <p class="card-body" data-pt="Criação de newsletters em HTML para programas educacionais — cuidando tanto do design visual quanto da produção de templates para distribuição em larga escala." data-en="Creating HTML newsletters for educational programs — handling both the visual design and template production for large-scale distribution.">Criação de newsletters em HTML para programas educacionais — cuidando tanto do design visual quanto da produção de templates para distribuição em larga escala.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon-wrap"><div class="icon-img-wrap"><img src="https://www.figma.com/api/mcp/asset/6c426a35-7c84-434f-b02c-2975a2acdf50" alt="" /></div></div>
+        <p class="card-title" data-pt="Identidades Visuais" data-en="Visual Identities">Identidades Visuais</p>
+        <p class="card-body" data-pt="Criação de mais de 20 identidades visuais para conteúdo e programas educacionais — dando a cada iniciativa de cliente uma identidade distinta e memorável dentro do seu sistema de marca." data-en="Creating over 20 visual identities for educational content and programs — giving each client initiative a distinct, memorable identity within their brand system.">Criação de mais de 20 identidades visuais para conteúdo e programas educacionais — dando a cada iniciativa de cliente uma identidade distinta e memorável dentro do seu sistema de marca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing quote -->
+  <div class="closing-quote-wrap">
+    <blockquote class="closing-quote" data-pt="Seis anos projetando para educação me deram algo raro — a &lt;strong&gt;capacidade de fazer conteúdo complexo parecer simples&lt;/strong&gt;, e de entregar com consistência em marcas, públicos e formatos completamente diferentes." data-en="Six years designing for education gave me something rare — the &lt;strong&gt;ability to make complex content feel simple&lt;/strong&gt;, and to deliver consistently across completely different brands, audiences, and formats.">
+      Seis anos projetando para educação me deram algo raro — a <strong>capacidade de fazer conteúdo complexo parecer simples</strong>, e de entregar com consistência em marcas, públicos e formatos completamente diferentes.
+    </blockquote>
+  </div>
+</div>
+
+<!-- CTA Footer -->
+<footer class="cta-footer">
+  <div class="cta-block">
+    <p class="cta-sublabel" data-pt="— estudo de caso completo" data-en="— full case study">— estudo de caso completo</p>
+    <h2 class="cta-heading" data-pt="&lt;em&gt;Gostou do que viu?&lt;/em&gt;&lt;br&gt;&lt;em&gt;Vamos &lt;/em&gt;construir&lt;br&gt;&lt;em&gt;algo &lt;/em&gt;juntos" data-en="&lt;em&gt;Like what you saw?&lt;/em&gt;&lt;br&gt;&lt;em&gt;Let's &lt;/em&gt;build&lt;br&gt;&lt;em&gt;something &lt;/em&gt;together">
+      <em>Gostou do que viu?</em><br>
+      <em>Vamos </em>construir<br>
+      <em>algo </em>juntos
+    </h2>
+    <div class="cta-actions">
+      <a href="index.html#contact" class="btn btn-solid-light" data-pt="Entrar em contato" data-en="Get in touch">Entrar em contato</a>
+      <a href="index.html" class="btn btn-outlined-light" data-pt="← Ver mais projetos" data-en="← See more projects">← Ver mais projetos</a>
+    </div>
+  </div>
+  <div class="footer-bar container">
+    <p class="footer-copy" data-pt="© 2026 Dan Trindade. Todos os direitos reservados." data-en="© 2026 Dan Trindade. All rights reserved.">© 2026 Dan Trindade. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<!-- Video modal -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoClose">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span data-pt="Fechar" data-en="Close">Fechar</span>
+    </button>
+    <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</div>
+
+<script>
+  const navWrap = document.getElementById('navWrap');
+  window.addEventListener('scroll', () => {
+    navWrap.classList.toggle('scrolled', window.scrollY > 0);
+  });
+
+  // ── Language switcher ──
+  (function () {
+    const LANG_KEY = 'portfolio-lang';
+    const btn = document.getElementById('langToggle');
+    function applyLang(lang) {
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        el.innerHTML = lang === 'en' ? (el.dataset.en || el.dataset.pt) : el.dataset.pt;
+      });
+      if (btn) btn.textContent = lang === 'en' ? 'PT' : 'EN';
+      localStorage.setItem(LANG_KEY, lang);
+    }
+    if (btn) btn.addEventListener('click', () => {
+      applyLang((localStorage.getItem(LANG_KEY) || 'pt') === 'pt' ? 'en' : 'pt');
+    });
+    applyLang(localStorage.getItem(LANG_KEY) || 'pt');
+  })();
+
+  // ── Video modal ──
+  const videoModal = document.getElementById('videoModal');
+  const videoFrame = document.getElementById('videoFrame');
+  const videoClose = document.getElementById('videoClose');
+
+  function openModal(url) {
+    videoFrame.src = url;
+    videoModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    videoModal.classList.remove('open');
+    videoFrame.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.mbp-laptop[data-video]').forEach(el => {
+    el.addEventListener('click', () => {
+      const url = el.dataset.video;
+      if (url) openModal(url);
+    });
+  });
+
+  videoClose.addEventListener('click', closeModal);
+  videoModal.addEventListener('click', e => { if (e.target === videoModal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
